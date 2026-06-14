@@ -47,6 +47,8 @@ declare global {
     trackSessionId?: string;
     variantPlayer?:string;
     language?: string;
+    __rum?: any;
+    isNotInit?: boolean;
   }
 
   interface ImportMetaEnv {

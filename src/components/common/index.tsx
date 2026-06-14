@@ -1,5 +1,4 @@
 'use client'
-import { useParams, usePathname } from 'next/navigation'
 import { useEffect, useLayoutEffect, useRef } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { useShallow } from 'zustand/shallow'
@@ -12,20 +11,16 @@ import { emitReportCacheHandle, reportSDK } from '@/lib/report'
 import { uploadH5VideoUrlReport } from '@/lib/services/book'
 import { detectionPwaStandalone, visibilityProperties } from '@/lib/utils'
 import { useDramaStore } from '@/stores/drama-store'
+import { getLocalStorage } from '@/lib/storageUtils'
+import PaySuccessModal from '@/components/success-modal'
+import LoginPopup from '@/components/login-popup'
+import { useLocation, useParams, useSearchParams } from "react-router-dom";
+
 const MAX_REASONABLE_DURATION = 300000 // 5分钟
 const MIN_REASONABLE_DURATION = 0
-import dynamic from 'next/dynamic'
 
-import { getLocalStorage } from '@/lib/storageUtils'
-
-const PaySuccessModal = dynamic(() => import('@/components/success-modal'), {
-  ssr: false,
-})
-const LoginPopup = dynamic(() => import('@/components/login-popup'), {
-  ssr: false,
-})
 export default function Common() {
-  const pathname = usePathname()
+  const pathname = useLocation().pathname;
   const previousPathRef = useRef<string | null>(null)
   const { id } = useParams()
   const { currentChapter, userInfo } = useDramaStore(
@@ -384,7 +379,9 @@ export default function Common() {
       window.__rum?.setConfig('user', {
         name: userInfo?.uid,
       })
-    } catch {}
+    } catch {
+      console.log("error")
+    }
   }, [userInfo?.uid])
 
   // useEffect(() => {
