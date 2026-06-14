@@ -1,17 +1,17 @@
 "use client";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe, StripeElementsOptions } from "@stripe/stripe-js";
-import { useSearchParams } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useSearchParams } from "react-router-dom";
+import { useI18n } from "@/i18n";
 
 import StripeCheckoutForm from "@/components/stripe-checkout";
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PK || "");
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK || "");
 
 export default function CheckoutForm() {
-  const searchParams = useSearchParams();
+  const [searchParams] = useSearchParams();
   const clientSecret = searchParams.get("clientSecret");
-  const locale = useLocale();
+  const { locale } = useI18n();
 
   if (!clientSecret) {
     return null;

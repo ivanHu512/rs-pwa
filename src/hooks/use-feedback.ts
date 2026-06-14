@@ -18,7 +18,7 @@ export default function useFeedback() {
     }
 
     const { uaParser } = getEnv()
-    const baseUrl = process.env.NEXT_PUBLIC_FEEDBACK_URL
+    const baseUrl = import.meta.env.VITE_FEEDBACK_URL
 
     const uid =
       [1, 2, 3, 4].reduce((p) => p + Math.floor(Math.random() * 10), '') +

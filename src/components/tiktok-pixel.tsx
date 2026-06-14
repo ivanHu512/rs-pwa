@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "react-router-dom";
 import Script from "next/script";
 import { useEffect } from "react";
 
@@ -11,9 +11,9 @@ declare global {
 }
 
 export const TikTokPixel = () => {
-  const searchParams = useSearchParams();
+  const [searchParams] = useSearchParams();
   const pixelId =
-    searchParams.get("pixel") || process.env.NEXT_PUBLIC_TIKTOK_PIXEL_ID;
+    searchParams.get("pixel") || import.meta.env.VITE_TIKTOK_PIXEL_ID;
 
   useEffect(() => {
     if (!pixelId || typeof window === "undefined") return;

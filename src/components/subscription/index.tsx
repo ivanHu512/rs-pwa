@@ -1,7 +1,7 @@
 'use client'
 import { getSiteConfigClient } from '@/lib/config/site'
 import { images } from '@/assets/images'
-import { useRouter } from 'next/navigation'
+import { useNavigate } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 import { LoginType, UserInfo } from '@/types/drama'
 import { useI18n } from '@/i18n'
@@ -28,7 +28,7 @@ const iconMap: Partial<Record<LoginType, string>> = {
 export default function SubscriptionPage() {
   const [isMounted, setIsMounted] = useState(false)
   const { t } = useI18n()
-  const router = useRouter()
+  const navigate = useNavigate()
   const [plan, setPlan] = useState<any>(null)
 
   const siteConfig = getSiteConfigClient()
@@ -51,7 +51,7 @@ export default function SubscriptionPage() {
     console.log({ notSign, userInfo })
     if (notSign) {
       const url = window.location.href
-      router.push(`/login?from=${encodeURIComponent(url)}`)
+      navigate(`/login?from=${encodeURIComponent(url)}`)
     }
   }, [userInfo])
 

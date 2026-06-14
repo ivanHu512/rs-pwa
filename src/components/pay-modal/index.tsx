@@ -1,5 +1,5 @@
 'use client'
-import { useParams, useSearchParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { useI18n } from '@/i18n'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
@@ -135,7 +135,8 @@ export default function PayModal() {
   const { checkoutOrder, handleRetention, payHandler, isMixPay } = useCheckout()
   const { getFeedbackUrl } = useFeedback()
   const { t } = useI18n()
-  const store_type = useSearchParams().get('store_type') || ''
+  const [searchParams] = useSearchParams()
+  const store_type = searchParams.get('store_type') || ''
   const { id } = useParams()
   const siteConfig = getSiteConfigClient()
   const [data, setData] = useState<any>([])

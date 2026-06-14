@@ -5,7 +5,7 @@ import {
   useStripe,
   // ExpressCheckoutElement,
 } from '@stripe/react-stripe-js'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'react-router-dom'
 import { useI18n } from '@/i18n'
 import React, { useState } from 'react'
 import { toast } from 'sonner'
@@ -22,7 +22,7 @@ const StripeCheckoutForm: React.FC = (): any => {
   const [submit, setSubmit] = useState(false)
   const stripe = useStripe()
   const elements = useElements()
-  const searchParams = useSearchParams()
+  const [searchParams] = useSearchParams()
   const redirect = searchParams.get('redirect')
 
   const { payReport } = useReport()

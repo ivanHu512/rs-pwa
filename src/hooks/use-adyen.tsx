@@ -8,7 +8,7 @@ import {
   UIElement,
   UIElementProps,
 } from '@adyen/adyen-web'
-import { useLocale } from 'next-intl'
+import { useI18n } from '@/i18n'
 import { useEffect, useRef } from 'react'
 
 import {
@@ -38,7 +38,7 @@ export function useAdyen() {
     setOpenFailModal,
     setOpenAdyenModal,
   } = useCheckoutStore()
-  const locale = useLocale()
+  const { locale } = useI18n()
   const { payReport } = useReport()
   const { checkoutOrder } = useCheckout()
 

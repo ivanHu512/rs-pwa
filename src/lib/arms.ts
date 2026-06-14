@@ -7,7 +7,7 @@ const envMap: Record<string, envType> = {
 } as const
 
 export function generateArmsScript() {
-  const env = envMap[process.env.NEXT_PUBLIC_APP_ENV || 'development']
+  const env = envMap[import.meta.env.VITE_APP_ENV || 'development']
   return {
     pid: '1fw35mn5y7h@7fba2ddeae7ab9b',
     endpoint: 'https://1fw35mn5y7h-default-sea.rum.aliyuncs.com',

@@ -12,18 +12,17 @@ import { useDramaStore } from '@/stores/drama-store'
 import { useLoginStore } from '@/stores/login-store'
 import { UserInfo } from '@/types/drama'
 import { useI18n } from '@/i18n'
-import Script from 'next/script'
 import { useEffect, useRef, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 export default function LoginButton() {
   const siteConfig = getSiteConfigClient()
   const loginDataInfo = useRef<any>(null)
   const userRef = useRef<UserInfo>({}) //
   const { t } = useI18n()
-  const searchParams = useSearchParams()
-  const router = useRouter()
+  const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
   const [loginList, setLoginList] = useState<
     { sid: 1 | 3 | 5; icon: string; alt: string }[]
   >(() => [
@@ -57,7 +56,7 @@ export default function LoginButton() {
     //     0 ||
     //   isUserVip(currentUserInfo?.account)
     // ) {
-    //   // 获取第三方回来的用户信息作显�?
+    //   // 获取第三方回来的用户信息作显�?
     //   getThirdLoginUserInfo(res)
     // } else {
     //   requestLogin(res)
@@ -150,7 +149,7 @@ export default function LoginButton() {
 
   const redirectFrom = () => {
     const redirect = searchParams.get('from')
-    router.push(redirect || '/')
+    navigate(redirect || '/')
   }
 
   /**
@@ -202,7 +201,7 @@ export default function LoginButton() {
     <>
       {
         <>
-          <Script
+          <script
             src='https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js'
             onLoad={() => {
               window.AppleID.auth.init({
@@ -213,7 +212,7 @@ export default function LoginButton() {
               })
             }}
           />
-          <Script
+          <script
             src='https://connect.facebook.net/en_US/sdk.js'
             async
             defer

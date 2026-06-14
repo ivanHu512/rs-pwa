@@ -1,5 +1,4 @@
-import { useParams, useRouter } from 'next/navigation'
-import { useLocale } from 'next-intl'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useI18n } from '@/i18n'
 import {
   useCallback,
@@ -68,8 +67,8 @@ export const useDramaData = ({
 }: DramaProps & {
   containerRefs: React.RefObject<Record<number, HTMLDivElement>>
 }) => {
-  const router = useRouter()
-  const locale = useLocale()
+  const navigate = useNavigate()
+  const { locale } = useI18n()
   const { preload: preloadUrl } = usePreloadUrl()
   const { t } = useI18n()
   const { playEvent, currencyChangeReport } = useReport()
@@ -283,7 +282,7 @@ export const useDramaData = ({
     if (mediaType) params.set('mediaType', mediaType)
 
     const paramsString = params.toString()
-    router.push(`/${locale}${paramsString ? `/?${paramsString}` : ''}`)
+    navigate(`/${locale}${paramsString ? `/?${paramsString}` : ''}`)
     window.routerTime = Date.now()
   }, [])
 

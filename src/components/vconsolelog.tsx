@@ -5,7 +5,7 @@ import Script from 'next/script'
 export default function VConsolelog() {
   return (
     <>
-      {process.env.NEXT_PUBLIC_APP_ENV !== 'production' && (
+      {import.meta.env.VITE_APP_ENV !== 'production' && (
         <Script
           src='https://unpkg.com/vconsole@latest/dist/vconsole.min.js'
           onLoad={() => {

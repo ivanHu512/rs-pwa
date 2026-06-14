@@ -45,6 +45,8 @@ declare global {
     shelf_id?: number;
     routerTime?: number;
     trackSessionId?: string;
+    variantPlayer?:string;
+    language?: string;
   }
 
   interface ImportMetaEnv {

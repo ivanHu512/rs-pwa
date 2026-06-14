@@ -1,4 +1,4 @@
-import { useParams, useSearchParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { useI18n } from '@/i18n'
 import { useCallback, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
@@ -129,7 +129,8 @@ export const useOneLink = (): UseOneLinkReturn => {
   )
   // 从URL参数中获取书籍ID
   const { id } = useParams() as { id: string }
-  const mediaType = useSearchParams().get('mediaType') || ''
+  const [searchParams] = useSearchParams()
+  const mediaType = searchParams.get('mediaType') || ''
   const { appDownloadReport } = useReport()
 
   const coverUrlParamsObj = (params: any) => {

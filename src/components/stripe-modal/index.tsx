@@ -3,18 +3,18 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 // import { payReport } from "@/utils/reportInfo/reportedMethods";
 // import { getOrderInfo } from "@/lib";
-import { useLocale } from "next-intl";
+import { useI18n } from "@/i18n";
 import React, { useEffect, useMemo, useState } from "react";
 
 import { Modal } from "@/components/dialog";
 import StripeCheckoutForm from "@/components/stripe-checkout";
 import { useDramaStore } from "@/stores/drama-store";
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PK || "");
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK || "");
 
 export default function StripeModal() {
   const { stripeModal, setStripeModal } = useDramaStore();
-  const locale = useLocale();
+  const { locale } = useI18n();
   const [isOpen, setOpen] = useState(false);
 
   const options = useMemo(() => {

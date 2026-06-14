@@ -1,6 +1,5 @@
 'use client'
 import { useParams } from 'next/navigation'
-import { useLocale } from 'next-intl'
 import { useI18n } from '@/i18n'
 import React, {
   CSSProperties,
@@ -105,8 +104,7 @@ const Video = forwardRef<VideoRef, VideoProps>(
     },
     ref
   ) => {
-    const { t } = useI18n()
-    const locale = useLocale()
+    const { t, locale } = useI18n()
     /** 获取书籍id */
     const { id: bookId } = useParams() as { id: string }
     /** 埋点上报事件 */
@@ -934,7 +932,7 @@ const Video = forwardRef<VideoRef, VideoProps>(
             screen_mode,
             currentChapterRef.current
           )
-          console.log('进度�?, currentChapter?.playTime)
+          console.log('progress', currentChapter?.playTime)
           const startTime = currentChapter?.playTime || 0
           initHandle({
             url: currentChapter?.url,
@@ -952,7 +950,7 @@ const Video = forwardRef<VideoRef, VideoProps>(
           })
         } else {
           console.log(
-            '这是更换视频�?,
+            'change video source',
             videoRef.current.muted(),
             currentChapter?.url,
             vtt_lang,

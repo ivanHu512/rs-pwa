@@ -1,12 +1,12 @@
 "use client";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "react-router-dom";
 import { Suspense } from "react";
 
 import { FacebookPixel } from "./facebook-pixel";
 import { TikTokPixel } from "./tiktok-pixel";
 
 function PixelContent() {
-  const searchParams = useSearchParams();
+  const [searchParams] = useSearchParams();
   const mediaType = searchParams.get("mediaType") || "";
 
   if (!mediaType) {

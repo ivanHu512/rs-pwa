@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useSearchParams } from "next/navigation";
+import { useLocation, useSearchParams } from "react-router-dom";
 import Script from "next/script";
 import { useEffect } from "react";
 
@@ -11,11 +11,11 @@ declare global {
 }
 
 export const FacebookPixel = () => {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const pathname = useLocation().pathname;
+  const [searchParams] = useSearchParams();
 
   const pixelId =
-    searchParams.get("pixel") || process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
+    searchParams.get("pixel") || import.meta.env.VITE_FACEBOOK_PIXEL_ID;
 
   useEffect(() => {
     if (!pixelId) return;

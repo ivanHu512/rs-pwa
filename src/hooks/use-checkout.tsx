@@ -1,5 +1,5 @@
 'use client'
-import { useParams, useSearchParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { useCallback, useEffect, useRef } from 'react'
 import { useShallow } from 'zustand/shallow'
 
@@ -29,8 +29,9 @@ export function useCheckout() {
       setUserInfo: state.setUserInfo,
     }))
   )
-  // 商城模式 iap 或者 vip ，其它为混合
-  const storeMode = useSearchParams().get('h5mode') || ''
+  // 商城模式 iap 或�?vip ，其它为混合
+  const [searchParams] = useSearchParams()
+  const storeMode = searchParams.get('h5mode') || ''
   // 是否混合
   const isMixPay = !['iap', 'vip'].includes(storeMode)
 
@@ -138,7 +139,7 @@ export function useCheckout() {
     }
 
     if (!isSubscription) {
-      //金币变化埋点（coins）
+      //金币变化埋点（coins�?
       currencyChangeReport({
         _vc_id: 'vc_01',
         _change_amount: add_coins,
@@ -247,7 +248,7 @@ export function useCheckout() {
       if (data?.paymentLink) {
         window.location.href = data.paymentLink
       }
-      // paypal 用的是这个字段
+      // paypal 用的是这个字�?
       if (data?.approve_link) {
         window.location.href = data.approve_link
       }

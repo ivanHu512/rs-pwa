@@ -1,14 +1,14 @@
-import { useRouter } from 'next/navigation'
+import { useNavigate } from 'react-router-dom'
 import { useCheckout } from '@/hooks/use-checkout'
 import { cn, getConfigId, getH5mode, getH5Advertise } from '@/lib/utils'
-import { useLocale } from 'next-intl'
 import { HomeIcon, HomeIcon2 } from './ui/icons'
 import { useEffect, useState } from 'react'
 import { isReelshort } from '@/lib/config/site'
+import { useI18n } from '@/i18n'
 
 export default function BackHome({ className }: { className?: string }) {
-  const router = useRouter()
-  const locale = useLocale()
+  const navigate = useNavigate()
+  const { locale } = useI18n()
   const { handleRetention } = useCheckout()
   const [isReelShort, setIsReelShort] = useState(false)
 
@@ -30,7 +30,7 @@ export default function BackHome({ className }: { className?: string }) {
         if (mediaType) params.set('mediaType', mediaType)
 
         const paramsString = params.toString()
-        router.push(`/${locale}${paramsString ? `/?${paramsString}` : ''}`)
+        navigate(`/${locale}${paramsString ? `/?${paramsString}` : ''}`)
         window.routerTime = Date.now()
       },
       pos: 1,

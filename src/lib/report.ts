@@ -23,7 +23,7 @@ if (typeof window !== 'undefined') {
 }
 
 const reportSDK = ReportSDK.getInstance({
-  reportAPI: `${process.env.NEXT_PUBLIC_API_LOG_DOMAIN}`,
+  reportAPI: `${import.meta.env.VITE_API_LOG_DOMAIN}`,
   version: '1.0.01',
   channelId: getSiteConfigClient()?.channelId || '',
   appId: 'cm1017',
