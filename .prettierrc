@@ -1,0 +1,3 @@
+{
+  "extends": ["@rs/lint-config/prettier"]
+}

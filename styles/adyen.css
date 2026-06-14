@@ -1,0 +1,197 @@
+/* https://github.com/Adyen/adyen-web?tab=readme-ov-file#localization */
+
+:root {
+  --adyen-sdk-color-background-primary: #141414;
+  --adyen-sdk-color-background-secondary: #292929;
+  --adyen-sdk-color-label-primary: rgba(255, 255, 255, 0.7);
+  --adyen-sdk-color-separator-primary: rgba(255, 255, 255, 0.9);
+  /**边框**/
+  --adyen-sdk-color-outline-primary: rgba(255, 255, 255, 0.15);
+  --adyen-sdk-color-outline-tertiary: rgba(255, 255, 255, 0.15);
+  --adyen-sdk-color-outline-primary-active: rgba(255, 255, 255, 0.9);
+
+  /** 外边框 **/
+  --adyen-sdk-color-outline-secondary: rgba(255, 255, 255, 0);
+
+  /*--adyen-sdk-color-label-critical: hsl(var(--primary));*/
+
+  /* --adyen-sdk-color-outline-primary-hover: rgba(255,255,255,0); */
+
+  /** 按钮背景色 **/
+  --adyen-sdk-color-background-always-dark: var(--button-bg);
+  --adyen-sdk-color-background-inverse-primary-hover: var(--button-bg);
+  --adyen-sdk-color-background-always-dark-active: var(--button-bg);
+
+  --adyen-sdk-color-background-secondary-active: var(--button-bg);
+
+  /** 按钮阴影 **/
+  --adyen-sdk-box-shadow-primary: var(--button-shadow);
+
+  --adyen-sdk-color-label-disabled: hsla(var(--primary) / 0.3);
+
+  --adyen-sdk-color-background-disabled: #292929;
+  --adyen-sdk-color-label-secondary: rgba(255, 255, 255, 0.3);
+
+  --adyen-sdk-spacer-120: 40px;
+  --adyen-sdk-border-radius-m: 4px;
+
+  --adyen-sdk-text-body-font-size: 12px;
+  --adyen-sdk-text-body-line-height: normal;
+
+  --adyen-sdk-text-caption-font-size: 12px;
+  --adyen-sdk-text-caption-line-height: normal;
+
+  /* --adyen-sdk-spacer-070: 12px; */
+
+  /* --adyen-sdk-spacer-020: 4px;
+  --adyen-sdk-text-body-font-size: 12px;
+  --adyen-sdk-text-caption-font-size: 12px; */
+
+  /* input 高度 */
+  /* --adyen-sdk-spacer-110: 40px; */
+  @media screen and (min-width: 1024px) {
+    /* 大屏幕下的样式 */
+    /* --adyen-sdk-text-caption-font-size: 1rem; */
+  }
+}
+.stored-card .adyen-checkout-form-instruction {
+  display: none;
+}
+.adyen-checkout__payment-method {
+  border-radius: 4px !important;
+  border: 0 !important;
+}
+.adyen-checkout__field--inactive > .adyen-checkout__input-wrapper {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.adyen-checkout__field--valid .adyen-checkout__card__cardNumber__brandIcon {
+  opacity: 1;
+}
+.adyen-checkout__card__cardNumber__brandIcon {
+  /* display: none; */
+  opacity: 0.5;
+}
+.adyen-checkout__field__exp-date_hint {
+  opacity: 0.5;
+}
+.adyen-checkout__card__cvc__hint--front {
+  opacity: 0.5;
+}
+.adyen-checkout__card__cvc__hint--back {
+  opacity: 0.5;
+}
+.adyen-checkout__button__icon {
+  display: none;
+}
+.adyen-checkout__button {
+  box-shadow: var(--button-shadow) !important;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.adyen-checkout__button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: var(--button-overlay-bg);
+  mix-blend-mode: var(--button-overlay-blend);
+  opacity: var(--button-overlay-opacity);
+  z-index: 0;
+}
+.adyen-checkout__button > * {
+  position: relative;
+  z-index: 1;
+}
+.adyen-checkout__button__text {
+  position: relative;
+  z-index: 1;
+}
+.adyen-checkout__checkbox__input + .adyen-checkout__checkbox__label:after {
+  background-color: transparent !important;
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 50% !important;
+  box-shadow: none !important;
+  border-color: rgb(106, 106, 106) !important;
+  border-width: 1.5px !important;
+}
+
+.adyen-checkout__checkbox__input:checked
+  + .adyen-checkout__checkbox__label:after {
+  background-color: #ffffff !important;
+  border-color: #fff !important;
+}
+.adyen-checkout__checkbox__input + .adyen-checkout__checkbox__label:before {
+  border-bottom-color: #000 !important;
+  border-right-color: #000 !important;
+}
+/* .adyen-checkout__input-wrapper .adyen-checkout__input{
+  height: 40px;
+} */
+
+/* .adyen-checkout__card__cvc__hint {
+  width: 30px;
+  height: 20px;
+} */
+
+.adyen-checkout__store-details {
+  background-color: transparent !important;
+  border: 0 !important;
+  padding: 0 2px !important;
+}
+.adyen-checkout__store-details ::after {
+  top: 1px !important;
+}
+.adyen-checkout__store-details ::before {
+  top: 3px !important;
+}
+
+.adyen-checkout-form-instruction {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+.adyen-checkout-contextual-text {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+.adyen-checkout__store-details .adyen-checkout__checkbox__label {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.adyen-checkout__card__holderName {
+  margin: 12px 0 !important;
+}
+
+.adyen-checkout__input-wrapper .adyen-checkout__input {
+  color: #fff !important;
+}
+
+.adyen-checkout__label__text {
+  margin-bottom: 8px !important;
+}
+
+.adyen-checkout__input {
+  padding-right: 12px;
+}
+
+.adyen-checkout__applepay__button {
+  width: 100% !important;
+}
+
+/* 小于 320才会变成一行 **/
+@media (min-width: 320px) {
+  .adyen-checkout__field--col-50 {
+    width: calc(50% - var(--adyen-sdk-spacer-040, 8px));
+  }
+}
+.adyen-checkout__card__exp-cvc .adyen-checkout__field {
+  margin-bottom: 0 !important;
+}
+
+.adyen-checkout__payment-method--googlepay {
+  display: none;
+}
+.adyen-checkout__payment-method--applepay {
+  display: none;
+}
