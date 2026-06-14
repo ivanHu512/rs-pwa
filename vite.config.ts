@@ -28,20 +28,20 @@ export default defineConfig(() => {
         modernPolyfills: true,
         renderLegacyChunks: true,
       }),
-      {
-        name: "ensure-sdk-first",
-        enforce: "post",
-        transformIndexHtml(html) {
-          const sdkTag =
-            /<script src="https:\/\/connect\.tiktok-minis\.com\/drama\/sdk\.js"><\/script>/;
-          const tags = html.match(sdkTag);
-          if (tags) {
-            const removed = html.replace(sdkTag, "");
-            return removed.replace("<head>", `<head>\n    ${tags[0]}`);
-          }
-          return html;
-        },
-      },
+      // {
+      //   name: "ensure-sdk-first",
+      //   enforce: "post",
+      //   transformIndexHtml(html) {
+      //     const sdkTag =
+      //       /<script src="https:\/\/connect\.tiktok-minis\.com\/drama\/sdk\.js"><\/script>/;
+      //     const tags = html.match(sdkTag);
+      //     if (tags) {
+      //       const removed = html.replace(sdkTag, "");
+      //       return removed.replace("<head>", `<head>\n    ${tags[0]}`);
+      //     }
+      //     return html;
+      //   },
+      // },
     ],
     server: {
       host: "0.0.0.0",

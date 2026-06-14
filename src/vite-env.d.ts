@@ -28,7 +28,7 @@ declare global {
       api: (
         path: string,
         params: Record<string, any>,
-        callback: (response: any) => void
+        callback: (response: any) => void,
       ) => void;
     };
     fbAsyncInit?: () => void;
@@ -45,13 +45,14 @@ declare global {
     shelf_id?: number;
     routerTime?: number;
     trackSessionId?: string;
-    variantPlayer?:string;
+    variantPlayer?: string;
     language?: string;
     __rum?: any;
     isNotInit?: boolean;
   }
 
   interface ImportMetaEnv {
+    readonly VITE_API_DOMAIN?: string;
     readonly VITE_API_LOG_DOMAIN?: string;
     readonly VITE_APP_ENV?: "test" | "gray" | "prod";
   }

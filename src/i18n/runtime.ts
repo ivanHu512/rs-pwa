@@ -1,4 +1,4 @@
-import { getCookie, setCookie } from "@/lib/cookie";
+import { getCookie, cookieSet } from "@/lib/cookies";
 import { LANGUAGE_COOKIE_KEY } from "@/lib/constant";
 import {
   DEFAULT_LOCALE,
@@ -44,7 +44,7 @@ export function detectCurrentLocale(): AppLocale {
 export function persistLocale(locale: AppLocale) {
   if (typeof window === "undefined") return;
 
-  setCookie(LANGUAGE_COOKIE_KEY, locale);
+  cookieSet(LANGUAGE_COOKIE_KEY, locale);
   document.documentElement.lang = locale;
   document.documentElement.dir = getLocaleDirection();
 }

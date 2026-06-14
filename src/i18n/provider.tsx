@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, useRef, type ReactNode } from "react";
 import { I18nextProvider } from "react-i18next";
-import { syncMiniUserInfo } from "@/lib/syncMiniUserInfo";
+// import { syncMiniUserInfo } from "@/lib/syncMiniUserInfo";
 import { I18nContext } from "./context";
 import i18n from "./instance";
 import {
@@ -31,12 +31,12 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     }
 
     // 切换语言后，重新请求 user info 接口，并刷新页面以确保整个页面状态更新
-    syncMiniUserInfo().catch((error) => {
-      console.error(
-        "[i18n] syncMiniUserInfo failed after locale change",
-        error,
-      );
-    });
+    // syncMiniUserInfo().catch((error) => {
+    //   console.error(
+    //     "[i18n] syncMiniUserInfo failed after locale change",
+    //     error,
+    //   );
+    // });
   }, [locale]);
 
   useEffect(() => {
