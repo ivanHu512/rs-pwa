@@ -1,6 +1,6 @@
 'use client'
 import { useParams, useSearchParams } from 'next/navigation'
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
 
@@ -134,7 +134,7 @@ export default function PayModal() {
   const { payReport, customEventReport } = useReport()
   const { checkoutOrder, handleRetention, payHandler, isMixPay } = useCheckout()
   const { getFeedbackUrl } = useFeedback()
-  const t = useTranslations()
+  const { t } = useI18n()
   const store_type = useSearchParams().get('store_type') || ''
   const { id } = useParams()
   const siteConfig = getSiteConfigClient()
@@ -159,7 +159,7 @@ export default function PayModal() {
     onSuccess: (res) => {
       console.log({ res })
       if (res.code === 0) {
-        // 过滤 paymentMethods，只保留 type 为 'googlepay'、'applepay' 和 'scheme' 的对象
+        // 过滤 paymentMethods，只保留 type �?'googlepay'�?applepay' �?'scheme' 的对�?
         const filteredPaymentMethods =
           res.data?.paymentMethods?.filter(
             (method: any) =>
@@ -257,7 +257,7 @@ export default function PayModal() {
       })
 
       if (!isMixPay) {
-        // 非混合
+        // 非混�?
         if (!selectedMethod) {
           return
         }
@@ -288,7 +288,7 @@ export default function PayModal() {
     [chapter, selectedMethod, isMixPay]
   )
 
-  /** 默认选中第一个商品 */
+  /** 默认选中第一个商�?*/
   useEffect(() => {
     if (!data || !openPayModal || !isMixPay) {
       return
@@ -340,7 +340,7 @@ export default function PayModal() {
     return accountInfo.coins + accountInfo.bonus
   }, [accountInfo])
 
-  /** paypal 重定向 */
+  /** paypal 重定�?*/
   useEffect(() => {
     const redirect = isPayRedirectBack()
     console.log('redirect paypal')

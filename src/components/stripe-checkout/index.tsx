@@ -6,7 +6,7 @@ import {
   // ExpressCheckoutElement,
 } from '@stripe/react-stripe-js'
 import { useSearchParams } from 'next/navigation'
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 import React, { useState } from 'react'
 import { toast } from 'sonner'
 
@@ -17,7 +17,7 @@ import { getOrderInfo } from '@/lib/checkout'
 import Spinner from '../ui/spinner'
 
 const StripeCheckoutForm: React.FC = (): any => {
-  const t = useTranslations()
+  const { t } = useI18n()
   const [isReady, setIsReady] = useState(false)
   const [submit, setSubmit] = useState(false)
   const stripe = useStripe()

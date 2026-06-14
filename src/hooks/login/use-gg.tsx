@@ -5,7 +5,7 @@ import {
   signInWithPopup,
   signInWithRedirect,
 } from 'firebase/auth'
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 import { useCallback, useEffect } from 'react'
 
 import Toast from '@/components/ui/toast'
@@ -18,7 +18,7 @@ import firebaseApp from '@/config/fireBaseConfig'
  */
 
 export function useGgLogin({ callback }: { callback: (res: any) => void }) {
-  const t = useTranslations()
+  const { t } = useI18n()
 
   useEffect(() => {
     const getGoogleRedirectResult = async () => {
@@ -75,7 +75,7 @@ export function useGgLogin({ callback }: { callback: (res: any) => void }) {
         Toast.show(t('login.login-fail'))
       }
       /**
-       * 用户主动取消授权弹框会触发 Firebase: Error (auth/popup-closed-by-user).
+       * 用户主动取消授权弹框会触�?Firebase: Error (auth/popup-closed-by-user).
        * 用户主动取消授权弹框后再次点击会先走到catch 提示auth/cancelled-popup-request
        */
       if (

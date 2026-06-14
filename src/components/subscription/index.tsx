@@ -4,7 +4,7 @@ import { images } from '@/assets/images'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import { LoginType, UserInfo } from '@/types/drama'
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 import { getThirdSubInfo } from '@/lib/services/checkout'
 import dayjs from 'dayjs'
 import { localKeyUser } from '@/lib/constant'
@@ -27,7 +27,7 @@ const iconMap: Partial<Record<LoginType, string>> = {
 }
 export default function SubscriptionPage() {
   const [isMounted, setIsMounted] = useState(false)
-  const t = useTranslations()
+  const { t } = useI18n()
   const router = useRouter()
   const [plan, setPlan] = useState<any>(null)
 
@@ -63,7 +63,7 @@ export default function SubscriptionPage() {
   useEffect(() => {
     getThirdSubInfo().then((res: any) => {
       const { code, data } = res
-      // 不是正常备选结算订阅
+      // 不是正常备选结算订�?
       if (code !== 0 || data.status !== 0) {
         return
       }

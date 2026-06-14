@@ -6,7 +6,7 @@ import { CloseIcon } from '@/components/ui/icons'
 import { useReport } from '@/hooks/use-report'
 import { storeOrderInfo } from '@/lib/checkout'
 import { useCheckoutStore } from '@/stores/checkout-store'
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 import { getSiteConfigClient } from '@/lib/config/site'
 
 const COUNTDOWN_SECONDS = 5 * 60 // 5分钟
@@ -22,7 +22,7 @@ const formatCountdown = (seconds: number): { mins: string; secs: string } => {
 }
 
 export default function RetentionModal() {
-  const t = useTranslations()
+  const { t } = useI18n()
   const siteConfig = getSiteConfigClient()
   const {
     openRetentionModal,
@@ -47,7 +47,7 @@ export default function RetentionModal() {
 
   const { open, product } = openRetentionModal
 
-  // 每次打开弹窗时重置倒计时
+  // 每次打开弹窗时重置倒计�?
   useEffect(() => {
     if (open) {
       if (window.$video) {
@@ -58,7 +58,7 @@ export default function RetentionModal() {
       console.log({ product })
 
       if (product) {
-        //处理一下，保持和store_list 接口的数据一致
+        //处理一下，保持和store_list 接口的数据一�?
         const data = {
           ...product,
           sub_success_popup: discountPopupInfo?.sub_success_popup,
@@ -103,7 +103,7 @@ export default function RetentionModal() {
   }, [open])
 
   /**
-   * 格式化倒计时
+   * 格式化倒计�?
    */
   const displayTime = useMemo(() => formatCountdown(remaining), [remaining])
 
@@ -116,7 +116,7 @@ export default function RetentionModal() {
       screen_play_type: 0,
       _channel_sku: product?.product_id,
     })
-    openRetentionModal.next?.() // 执行注册的回调
+    openRetentionModal.next?.() // 执行注册的回�?
     setOpenRetentionModal({
       open: false,
       next: undefined,

@@ -1,4 +1,4 @@
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
 
@@ -18,8 +18,8 @@ const AppModal: React.FC<{
         updateAppModalVisible: state.updateAppModalVisible,
       }))
     )
-  const t = useTranslations()
-  /** 当前章节的背景 */
+  const { t } = useI18n()
+  /** 当前章节的背�?*/
   const cover = useMemo(() => {
     return currentChapter?.video_pic
   }, [currentChapter?.video_pic])

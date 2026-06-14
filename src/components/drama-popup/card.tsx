@@ -1,4 +1,4 @@
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 import React, { memo, useMemo } from 'react'
 import { useShallow } from 'zustand/shallow'
 
@@ -28,7 +28,7 @@ const ChapterCard: React.FC<ChapterCardProps> = ({
       currentChapter: state.currentChapter,
     }))
   )
-  const t = useTranslations()
+  const { t } = useI18n()
   const config = getSiteConfigClient()
 
   /**

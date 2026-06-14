@@ -1,7 +1,7 @@
 'use client'
 import { ApplePay, GooglePay } from '@adyen/adyen-web'
 import { useDocumentVisibility } from 'ahooks'
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 import { useEffect, useMemo, useRef } from 'react'
 import { useShallow } from 'zustand/shallow'
 
@@ -12,7 +12,7 @@ import { useCheckoutStore } from '@/stores/checkout-store'
 import Drawer from '@/components/ui/custom-drawer'
 
 export default function Methods() {
-  const t = useTranslations()
+  const { t } = useI18n()
   const {
     adyenCheckout,
     itemInfo,
@@ -83,7 +83,7 @@ export default function Methods() {
     })
 
     if (process.env.NEXT_PUBLIC_APP_ENV !== 'development') {
-      // 开发环境就不加载了， 使用不了会报错
+      // 开发环境就不加载了�?使用不了会报�?
       applePay.isAvailable().then(() => {
         applePay.mount(appleContainerRef.current!)
         setApplePayInstance(applePay)

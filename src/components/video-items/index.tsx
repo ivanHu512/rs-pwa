@@ -1,7 +1,7 @@
 'use client'
 import dynamic from 'next/dynamic'
 import { useParams } from 'next/navigation'
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 import React, {
   CSSProperties,
   useCallback,
@@ -21,7 +21,7 @@ import { useDramaData } from '@/hooks/use-drama-data'
 import { useNavChapter } from '@/hooks/use-nav-chapter'
 import { useReport } from '@/hooks/use-report'
 import { useWindowSize } from '@/hooks/use-size'
-/** 阿里播放器组件 */
+/** 阿里播放器组�?*/
 import AliVideo from '@/components/ui/video/IndexAli'
 import { useVideoPool } from '@/hooks/use-video-ali-pool'
 /** 原生播放器组件，方便回滚 */
@@ -70,7 +70,7 @@ const urlManager = new URLManager()
 const siteConfig = getSiteConfigClient()
 /**延迟2s, 提示滑动按钮消失 */
 const delay = 4000
-/**手势动画是否展示过，存储local值 */
+/**手势动画是否展示过，存储local�?*/
 const hand = '1'
 /**swiper动画时间 */
 const animateDelay = 100
@@ -79,7 +79,7 @@ const VideoItems: React.FC<DramaProps> = (props) => {
   const playerVariant = usePlayerVariant()
   const isAliPlayer = playerVariant === 'ali'
   const initSort = props.sort || 0
-  const t = useTranslations()
+  const { t } = useI18n()
   const { id: bookId } = useParams() as { id: string }
   const homeRef = useRef<HTMLDivElement>(null)
   const swiperRef = useRef<ExposeRef>(null)
@@ -148,11 +148,11 @@ const VideoItems: React.FC<DramaProps> = (props) => {
   const [guideHandStatus, setGuideHandStatus] = useState(false)
   /** swiper全局管理 */
   const setSwiperRef = useSwiperStore((state) => state.setSwiperRef)
-  /** 获取窗口的实际尺寸 */
+  /** 获取窗口的实际尺�?*/
   const { height: screenH } = useWindowSize()
 
   /**
-   * 将 ref 存储到全局 store
+   * �?ref 存储到全局 store
    */
   useEffect(() => {
     setSwiperRef(swiperRef as React.RefObject<ExposeRef>)
@@ -172,8 +172,8 @@ const VideoItems: React.FC<DramaProps> = (props) => {
     return chapterListRef.current
   }, [chapterListRef.current, props.preload])
 
-  /** 控制video移动到对应页面 */
-  /** 阿里播放器组件 */
+  /** 控制video移动到对应页�?*/
+  /** 阿里播放器组�?*/
   const aliVideoPool = useVideoPool()
   /** 原生播放器组件，方便回滚 */
   const nativeVideoPool = useVideoNativePool()
@@ -196,10 +196,10 @@ const VideoItems: React.FC<DramaProps> = (props) => {
     containerRefs,
   })
 
-  /** 防抖定时器引用，用于快速滑动时的防抖处理 */
+  /** 防抖定时器引用，用于快速滑动时的防抖处�?*/
   const slideChangeTimerRef = useRef<number | null>(null)
 
-  /** 上一次切换的章节ID，用于避免重复切换 */
+  /** 上一次切换的章节ID，用于避免重复切�?*/
   const lastChapterIdRef = useRef<string | null>(null)
 
   /**
@@ -234,7 +234,7 @@ const VideoItems: React.FC<DramaProps> = (props) => {
         true
       )
 
-      /**切换视频和播放结束事件上报 */
+      /**切换视频和播放结束事件上�?*/
       const switchVideoAndReportEnd = () => {
         const preChapterId = currentChapterId || ''
         const historyPlayProgress =
@@ -337,7 +337,7 @@ const VideoItems: React.FC<DramaProps> = (props) => {
   }, [])
 
   /**
-   * 当前视频播放结束, 自动切换下一章
+   * 当前视频播放结束, 自动切换下一�?
    */
   const handleEnded = useCallback(
     (id: string) => {
@@ -363,8 +363,8 @@ const VideoItems: React.FC<DramaProps> = (props) => {
   )
 
   /**
-   * 等待用户第一张视频资源加载成功，再展示手势引导
-   * @param status true：表示直接消失
+   * 等待用户第一张视频资源加载成功，再展示手势引�?
+   * @param status true：表示直接消�?
    */
   const handleReady = useCallback((status?: boolean) => {
     const isHandShow = localStorage.getItem(localKeyHand)
@@ -380,7 +380,7 @@ const VideoItems: React.FC<DramaProps> = (props) => {
   }, [])
 
   /**
-   * 样式计算 - 优化依赖项
+   * 样式计算 - 优化依赖�?
    */
   const getStyles = useCallback(
     (cover: string, shouldRender?: boolean, chapterId?: string) => {
@@ -408,7 +408,7 @@ const VideoItems: React.FC<DramaProps> = (props) => {
     }
   }, [])
 
-  /** 作品已下架 */
+  /** 作品已下�?*/
   if (bookStatus === storyStatus.BOOK_UNPUBLISH) {
     return <UnpublishModal />
   }
@@ -541,7 +541,7 @@ const VideoItems: React.FC<DramaProps> = (props) => {
       <DramaPopup />
       {/* 解锁toast */}
       <UnlockedToast />
-      {/* 开始充值弹窗 */}
+      {/* 开始充值弹�?*/}
       <PayModal />
       {/* app引导弹窗 */}
       <AppModal />

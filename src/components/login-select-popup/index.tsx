@@ -1,5 +1,5 @@
 'use client'
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 import { useEffect, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
 
@@ -35,7 +35,7 @@ export default function LoginSelectPopup({
     }))
   )
   const { userLoginInformationPopupReport } = useReport()
-  const t = useTranslations()
+  const { t } = useI18n()
   const siteConfig = getSiteConfigClient()
 
   const [selectedUid, setSelectedUid] = useState<number | null>(null)

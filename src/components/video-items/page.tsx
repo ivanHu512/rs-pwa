@@ -1,4 +1,4 @@
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 import React, {
   CSSProperties,
   forwardRef,
@@ -27,7 +27,7 @@ type PageProps = {
 }
 
 const Page = forwardRef<PageRef, PageProps>(({ id }, ref) => {
-  const t = useTranslations()
+  const { t } = useI18n()
   /** 控制提示付费弹窗 */
   const [lockedModalVisible, setLockedModalVisible] = useState(false)
   const [online, setOnline] = useState(true)
@@ -56,7 +56,7 @@ const Page = forwardRef<PageRef, PageProps>(({ id }, ref) => {
   )
   const setOpenPayModal = useCheckoutStore((state) => state.setOpenPayModal)
 
-  // 判断是否为当前章节
+  // 判断是否为当前章�?
   const isCurrentChapter = useMemo(
     () => currentChapterId === id,
     [currentChapterId, id]
@@ -134,7 +134,7 @@ const Page = forwardRef<PageRef, PageProps>(({ id }, ref) => {
     }
   }, [t])
   /**
-   * 样式计算 - 优化依赖项
+   * 样式计算 - 优化依赖�?
    */
   const styles = useMemo(
     () => ({
@@ -171,7 +171,7 @@ const Page = forwardRef<PageRef, PageProps>(({ id }, ref) => {
           // loading="lazy"
         />
       </div>
-      {/* 充值提示弹窗 */}
+      {/* 充值提示弹�?*/}
       <LockedModal
         isOpen={lockedModalVisible}
         onOpenChange={setLockedModalVisible}

@@ -1,5 +1,5 @@
 "use client";
-import { useTranslations } from "next-intl";
+import { useI18n } from "@/i18n";
 import React, {
   memo,
   RefObject,
@@ -30,7 +30,7 @@ interface IProps {
   showPlayType: VideoPlayBtnTypeEnum;
 }
 /**
- * 短剧控制栏组件
+ * 短剧控制栏组�?
  * 功能：显示当前话数、提供全屏切换功能，支持自动隐藏
  */
 const ControlBar: React.FC<IProps> = ({ showPlayType, serialNumber = 0, className, children, onVolume }) => {
@@ -47,11 +47,11 @@ const ControlBar: React.FC<IProps> = ({ showPlayType, serialNumber = 0, classNam
     updateDrawerVisible: state.updateDrawerVisible,
   })));
   const { customEventReport } = useReport();
-  const t = useTranslations();
+  const { t } = useI18n();
   const { request } = useRequestIdle()
   const [isVisible, setIsVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
-  /** 控制条区域 */
+  /** 控制条区�?*/
   const controlBarRef = useRef<HTMLDivElement>(null);
   const currentSerialNumber = currentChapter.serial_number || 0
   const totalChapterNum = chapterList[chapterList.length - 1]?.serial_number ?? serialNumber;
@@ -80,7 +80,7 @@ const ControlBar: React.FC<IProps> = ({ showPlayType, serialNumber = 0, classNam
     };
   }, [controlStatus]);
   /**
-   * 原生触摸事件监听器
+   * 原生触摸事件监听�?
    * 消除父元素副作用
    */
   useEffect(() => {

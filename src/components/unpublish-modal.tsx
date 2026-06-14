@@ -1,6 +1,5 @@
-'use client'
-import { useRouter } from 'next/navigation'
-import { useLocale, useTranslations } from 'next-intl'
+import { useLocation, useNavigate } from "react-router-dom";
+import { useI18n } from '@/i18n'
 import React, {
   memo,
   useEffect,
@@ -17,9 +16,8 @@ import { useCheckoutStore } from '@/stores/checkout-store'
 import { useDramaStore } from '@/stores/drama-store'
 import { storyStatus } from '@/types/drama'
 const UnpublishModal: React.FC = () => {
-  const t = useTranslations()
-  const router = useRouter()
-  const locale = useLocale()
+  const { locale, t } = useI18n()
+  const navigate = useNavigate();
   const { bookStatus } = useDramaStore(
     useShallow((state) => ({
       bookStatus: state.bookStatus,
@@ -40,7 +38,7 @@ const UnpublishModal: React.FC = () => {
       if (mediaType) params.set('mediaType', mediaType)
 
       const paramsString = params.toString()
-      router.push(`/${locale}${paramsString ? `/?${paramsString}` : ''}`)
+      navigate(`/${locale}${paramsString ? `/?${paramsString}` : ''}`)
       window.routerTime = Date.now()
     }
   }, [bookStatus])
@@ -48,7 +46,7 @@ const UnpublishModal: React.FC = () => {
   const isAllowedDomain = () => {
     const hostname = window.location.hostname
 
-    // 允许的域名列表
+    // 允许的域名列�?
     const allowedDomains = [
       'test-delivery-drama-web.epubgame.com',
       'gray-drama.reelshort.com',

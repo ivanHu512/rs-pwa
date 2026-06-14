@@ -1,5 +1,5 @@
 'use client'
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 import React, {
   startTransition,
   useCallback,
@@ -34,8 +34,30 @@ type BeforeInstallPromptEvent = Event & {
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>
 }
 
+const moreIcon = (
+  <span className='mx-[2px] inline-block rounded-[4px] bg-[#007AFF] align-middle'>
+    <span className='flex h-[16px] w-[28px] items-center justify-between px-[4px]'>
+      <i className='block h-[4px] w-[4px] rounded-full bg-white'></i>
+      <i className='block h-[4px] w-[4px] rounded-full bg-white'></i>
+      <i className='block h-[4px] w-[4px] rounded-full bg-white'></i>
+    </span>
+  </span>
+)
+
+function renderBrowserTip(text: string) {
+  const [before, after = ''] = text.split('<moreIcon></moreIcon>')
+
+  return (
+    <>
+      {before}
+      {moreIcon}
+      {after}
+    </>
+  )
+}
+
 const PwaGuide: React.FC = () => {
-  const t = useTranslations()
+  const { t } = useI18n()
 
   const siteConfig = getSiteConfigClient()
 
@@ -199,18 +221,9 @@ const PwaGuide: React.FC = () => {
           />
           <div className='mr-[25px] w-[276px] rounded-[8px] bg-white p-[16px]'>
             <span className='text-[14px] font-[400] text-black'>
-              {t.rich('pwa.click-browser', {
-                app: siteConfig?.title || '',
-                moreIcon: () => (
-                  <span className='mx-[2px] inline-block rounded-[4px] bg-[#007AFF] align-middle'>
-                    <span className='flex h-[16px] w-[28px] items-center justify-between px-[4px]'>
-                      <i className='block h-[4px] w-[4px] rounded-full bg-white'></i>
-                      <i className='block h-[4px] w-[4px] rounded-full bg-white'></i>
-                      <i className='block h-[4px] w-[4px] rounded-full bg-white'></i>
-                    </span>
-                  </span>
-                ),
-              })}
+              {renderBrowserTip(
+                t('pwa.click-browser', { app: siteConfig?.title || '' })
+              )}
             </span>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 import React, { memo, useEffect, useMemo, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
 
@@ -8,7 +8,7 @@ import { useDramaStore } from '@/stores/drama-store'
 const delay = 3000
 const siteConfig = getSiteConfigClient()
 const UnlockedToast: React.FC = () => {
-  const t = useTranslations()
+  const { t } = useI18n()
   const [isVisible, setIsVisible] = useState(false)
   const { accountInfo, lockedToastVisible, updateLockedToastVisible } =
     useDramaStore(

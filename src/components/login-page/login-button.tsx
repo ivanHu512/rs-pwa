@@ -11,7 +11,7 @@ import { detectWebView, isUserVip } from '@/lib/utils'
 import { useDramaStore } from '@/stores/drama-store'
 import { useLoginStore } from '@/stores/login-store'
 import { UserInfo } from '@/types/drama'
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 import Script from 'next/script'
 import { useEffect, useRef, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
@@ -21,7 +21,7 @@ export default function LoginButton() {
   const siteConfig = getSiteConfigClient()
   const loginDataInfo = useRef<any>(null)
   const userRef = useRef<UserInfo>({}) //
-  const t = useTranslations()
+  const { t } = useI18n()
   const searchParams = useSearchParams()
   const router = useRouter()
   const [loginList, setLoginList] = useState<
@@ -57,7 +57,7 @@ export default function LoginButton() {
     //     0 ||
     //   isUserVip(currentUserInfo?.account)
     // ) {
-    //   // 获取第三方回来的用户信息作显示
+    //   // 获取第三方回来的用户信息作显�?
     //   getThirdLoginUserInfo(res)
     // } else {
     //   requestLogin(res)

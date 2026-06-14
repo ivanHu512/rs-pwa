@@ -1,6 +1,6 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 import { useEffect, useMemo, useState } from 'react'
 import Marquee from 'react-fast-marquee'
 import { useShallow } from 'zustand/shallow'
@@ -111,11 +111,11 @@ export default function PaySuccessModal() {
   )
 
   const [isClosing, setIsClosing] = useState(false)
-  const t = useTranslations()
+  const { t } = useI18n()
 
   const { customEventReport } = useReport()
 
-  // 自动关闭：显示 3 秒后切换到关闭动画，动画结束后再隐藏
+  // 自动关闭：显�?3 秒后切换到关闭动画，动画结束后再隐藏
   useEffect(() => {
     if (!isOpenIapSuccess) {
       return

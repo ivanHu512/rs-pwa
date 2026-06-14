@@ -1,5 +1,5 @@
 'use client'
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { cn } from '@/lib/utils'
@@ -24,7 +24,7 @@ const AdvancedTextCollapse: React.FC<AdvancedTextCollapseProps> = ({
   onExpand,
   onCollapse,
 }) => {
-  const t = useTranslations()
+  const { t } = useI18n()
   const merchant = useRef<HTMLDivElement>(null)
   const [showCompleteDesc, setShowCompleteDesc] = useState(false)
   const [showMore, setShowMore] = useState(false)

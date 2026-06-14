@@ -1,5 +1,5 @@
 'use client'
-import { useTranslations } from 'next-intl'
+import { useI18n } from '@/i18n'
 
 import { Hd, ViewIcon, WhiteHD, WhiteViewIcon } from '@/components/ui/icons'
 import { useCheckout } from '@/hooks/use-checkout'
@@ -10,7 +10,7 @@ export default function VipList(props: {
   onClick: (item: any) => void
   itemInfo?: any
 }) {
-  const t = useTranslations()
+  const { t } = useI18n()
   const { list, onClick, itemInfo } = props
   const { isMixPay } = useCheckout()
 
