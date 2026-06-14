@@ -1,8 +1,4 @@
 'use client'
-import Image from 'next/image'
-import { usePathname } from 'next/navigation'
-import Script from 'next/script'
-import { useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
 
@@ -21,11 +17,51 @@ import { detectWebView, isUserVip } from '@/lib/utils'
 import { useDramaStore } from '@/stores/drama-store'
 import { useLoginStore } from '@/stores/login-store'
 import { AccountInfo, UserInfo } from '@/types/drama'
-
+import { useI18n } from '@/i18n'
+import { useLocation } from "react-router-dom";
 import LoginSelectPopup from '../login-select-popup'
 
+function renderServicePrivacyText(
+  text: string,
+  links: {
+    userAgreement: string
+    privacyAgreement: string
+  }
+) {
+  const elements = []
+  const pattern = /<(linkOne|linkTwo)>(.*?)<\/\1>/g
+  let lastIndex = 0
+  let match: RegExpExecArray | null
+
+  while ((match = pattern.exec(text))) {
+    const [raw, tag, label] = match
+
+    if (match.index > lastIndex) {
+      elements.push(text.slice(lastIndex, match.index))
+    }
+
+    elements.push(
+      <a
+        key={`${tag}-${match.index}`}
+        className='text-[#6EA2F8]'
+        href={tag === 'linkOne' ? links.userAgreement : links.privacyAgreement}
+      >
+        {label}
+      </a>
+    )
+
+    lastIndex = match.index + raw.length
+  }
+
+  if (lastIndex < text.length) {
+    elements.push(text.slice(lastIndex))
+  }
+
+  return elements.length ? elements : text
+}
+
 export default function ConditionalLoginPopup() {
-  const pathname = usePathname()
+  const pathname = useLocation().pathname;
 
   // 排除的路径列表，回调页面不添加登陆页面逻辑
   const excludedPaths = ['/auth-callback']
@@ -47,7 +83,7 @@ export function LoginPopup() {
    * fb回调信息(第三方登录用户信息)不同，需要调用接口获取用户信息或者登陆获取信息替换 https://localhost:3002
    *  */
   const loginDataInfo = useRef<any>(null)
-  const t = useTranslations()
+  const { t } = useI18n();
   const [loginList, setLoginList] = useState<
     { sid: 1 | 3 | 5; icon: string; alt: string }[]
   >(() => [
@@ -56,6 +92,10 @@ export function LoginPopup() {
   ])
 
   const siteConfig = getSiteConfigClient()
+  const servicePrivacyText = t(
+    'login.login-service-privacy',
+    undefined
+  )
 
   const {
     openLoginModal,
@@ -194,7 +234,9 @@ export function LoginPopup() {
       } else {
         requestLogin(res)
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   /** 执行登陆 */
@@ -274,7 +316,7 @@ export function LoginPopup() {
     <>
       {
         <>
-          <Script
+          <script
             src='https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js'
             onLoad={() => {
               window.AppleID.auth.init({
@@ -285,7 +327,7 @@ export function LoginPopup() {
               })
             }}
           />
-          <Script
+          <script
             src='https://connect.facebook.net/en_US/sdk.js'
             async
             defer
@@ -326,13 +368,12 @@ export function LoginPopup() {
           className='relative mt-[32px] flex h-[48px] items-center justify-center rounded-[4px] bg-[#3E67B5]'
           onClick={() => handleClickLogin(2)}
         >
-          <Image
+          <img
             src={images.facebookIcon}
             alt='facebook'
             width={24}
             height={24}
             className='absolute left-4 top-1/2 -translate-y-1/2'
-            unoptimized
           />
           <p className='text-center text-[16px] font-[500] text-[rgba(255,255,255)]'>
             {t('login.login-facebook')}
@@ -345,28 +386,15 @@ export function LoginPopup() {
               className='flex h-[48px] flex-1 items-center justify-center rounded-[4px] bg-[#313131]'
               onClick={() => handleClickLogin(i.sid as any)}
             >
-              <Image src={i.icon} alt='gg' width={24} height={24} unoptimized />
+              <img src={i.icon} alt='gg' width={24} height={24} />
             </div>
           ))}
         </div>
         <div className='text-[rgba(255,255,255, 0.5)] mt-8 text-center text-[12px] font-[400]'>
-          {t.rich('login.login-service-privacy', {
-            linkOne: (chunks) => (
-              <a
-                className='text-[#6EA2F8]'
-                href={siteConfig?.userAgreement || '/user-agreement.html'}
-              >
-                {chunks}
-              </a>
-            ),
-            linkTwo: (chunks) => (
-              <a
-                className='text-[#6EA2F8]'
-                href={siteConfig?.privacyAgreement || '/privacy-agreement.html'}
-              >
-                {chunks}
-              </a>
-            ),
+          {renderServicePrivacyText(servicePrivacyText, {
+            userAgreement: siteConfig?.userAgreement || '/user-agreement.html',
+            privacyAgreement:
+              siteConfig?.privacyAgreement || '/privacy-agreement.html',
           })}
         </div>
       </CustomerDrawer>

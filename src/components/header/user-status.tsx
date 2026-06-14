@@ -1,5 +1,4 @@
 import { useThrottleFn } from 'ahooks'
-import { useTranslations } from 'next-intl'
 import React, { memo, useCallback, useMemo } from 'react'
 import { useShallow } from 'zustand/shallow'
 import { images } from '@/assets/images'
@@ -15,7 +14,8 @@ import { LoginType } from '@/types/drama'
 import { useJumpDramaPage } from '@/hooks/use-nav-drama'
 import { useReport } from '@/hooks/use-report'
 import { setReportPathName } from '@/lib/index'
-import { usePathname } from 'next/navigation'
+import { useI18n } from '@/i18n'
+import { useLocation } from "react-router-dom";
 
 const iconMap: Partial<Record<LoginType, string>> = {
   [LoginType.FB]: images.facebookIcon,
@@ -29,7 +29,8 @@ type IProps = {
 }
 
 const UserStatus: React.FC<IProps> = () => {
-  const t = useTranslations()
+  const { t } = useI18n();
+  const pathname = useLocation().pathname;
   const { jumpToPage } = useJumpDramaPage()
   const { openUserInfoBubble, setOpenUserInfoBubble, setOpenLoginModal } =
     useLoginStore(
@@ -46,7 +47,6 @@ const UserStatus: React.FC<IProps> = () => {
     }))
   )
   const { pageClickReport } = useReport()
-  const pathname = usePathname()
   const isVip = useMemo(() => isUserVip(accountInfo), [accountInfo])
   const siteConfig = useMemo(() => getSiteConfigClient(), [])
 

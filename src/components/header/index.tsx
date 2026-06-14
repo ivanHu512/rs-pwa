@@ -1,7 +1,6 @@
 'use client'
-import Image from 'next/image'
-import { usePathname } from 'next/navigation'
-import { useLocale, useTranslations } from 'next-intl'
+import { useLocation } from "react-router-dom";
+import { useI18n } from '@/i18n'
 import React, { CSSProperties, useEffect, useMemo, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
 
@@ -29,9 +28,8 @@ type IProps = {
 }
 
 const Header: React.FC<IProps> = ({ className, isShow, style = {} }) => {
-  const pathname = usePathname()
-  const locale = useLocale()
-  const t = useTranslations()
+  const pathname = useLocation().pathname;
+  const { locale, t } = useI18n()
 
   const siteConfig = getSiteConfigClient()
 
@@ -77,8 +75,8 @@ const Header: React.FC<IProps> = ({ className, isShow, style = {} }) => {
    */
   useEffect(() => {
     if (isShow) return
-    let hideTimer: NodeJS.Timeout
-    let shotTimer: NodeJS.Timeout
+    let hideTimer: number
+    let shotTimer: number
     if (controlStatus) {
       setShouldRender(true)
       shotTimer = setTimeout(() => {
@@ -94,8 +92,12 @@ const Header: React.FC<IProps> = ({ className, isShow, style = {} }) => {
       }
     }
     return () => {
-      hideTimer && clearTimeout(hideTimer)
-      shotTimer && clearTimeout(shotTimer)
+      if(hideTimer) {
+        clearTimeout(hideTimer)
+      }
+      if(shotTimer) {
+        clearTimeout(shotTimer)
+      }
       // 隐藏
       setIsVisible(false)
     }
@@ -143,9 +145,8 @@ const Header: React.FC<IProps> = ({ className, isShow, style = {} }) => {
         </div>
 
         <div className='flex items-center'>
-          <Image
+          <img
             alt={siteConfig.title}
-            unoptimized
             loading='lazy'
             width={127}
             height={24}

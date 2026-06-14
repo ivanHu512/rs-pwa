@@ -4,6 +4,34 @@ import type { TTMinisInstance } from "./lib/minisApi/types";
 declare global {
   interface Window {
     TTMinis?: TTMinisInstance;
+    AppleID: {
+      auth: {
+        init: (config: {
+          clientId?: string;
+          scope?: string;
+          redirectURI?: string;
+          state?: string;
+          redirect?: boolean;
+          usePopup?: boolean;
+        }) => void;
+        signIn: (config?: { state?: string }) => Promise<unknown>;
+      };
+    };
+    FB: {
+      init: (config: {
+        appId: string;
+        cookie?: boolean;
+        xfbml?: boolean;
+        version?: string;
+      }) => void;
+      getLoginStatus: (callback: (response: any) => void) => void;
+      api: (
+        path: string,
+        params: Record<string, any>,
+        callback: (response: any) => void
+      ) => void;
+    };
+    fbAsyncInit?: () => void;
     $video?: unknown;
     __REPORT_TRACK_SESSION_ID__?: string;
     __REPORT_PLAY_TRACE_ID__?: string;

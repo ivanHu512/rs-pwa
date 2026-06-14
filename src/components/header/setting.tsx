@@ -1,41 +1,29 @@
-'use client'
-
-import Image from 'next/image'
-import { useSearchParams } from 'next/navigation'
-import { useLocale } from 'next-intl'
-import { useTranslations } from 'next-intl'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
 import { images } from '@/assets/images'
 import Drawer from '@/components/ui/custom-drawer'
 import useFeedback from '@/hooks/use-feedback'
-import { i18nLabel } from '@/i18n/language'
-import { Link, usePathname } from '@/i18n/navigation'
-import { routing } from '@/i18n/routing'
+import { useI18n } from '@/i18n'
+import type { AppLocale } from '@/i18n/language'
 import { isReelshort } from '@/lib/config/site'
 import { setReportPathName } from '@/lib/index'
 import { reportSDK } from '@/lib/report'
 import { setLocalStorage } from '@/lib/storageUtils'
 import { cn } from '@/lib/utils'
 
-const { locales } = routing
-
 export const Setting = () => {
+  const { locale: currentLocale, languages, setLocale, t } = useI18n()
   const [open, setOpen] = useState(false)
   const [langExpanded, setLangExpanded] = useState(true)
-  const currentLocale = useLocale()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
+  const location = useLocation()
   const { getFeedbackUrl } = useFeedback()
-  const t = useTranslations()
   const [isReelShort, setIsReelShort] = useState(false)
+  const pathname = location.pathname
 
   useEffect(() => {
     setIsReelShort(isReelshort())
   }, [])
-
-  const queryString = searchParams.toString()
-  const href = queryString ? `${pathname}?${queryString}` : pathname
 
   const handleOpen = () => {
     reportSDK.eventReport({
@@ -51,8 +39,9 @@ export const Setting = () => {
     setOpen(true)
   }
 
-  const handleSelect = (locale: string) => {
+  const handleSelect = (locale: AppLocale) => {
     setLocalStorage('language', locale)
+    setLocale(locale)
     reportSDK.eventReport({
       event_name: 'm_custom_event',
       sub_event_name: 'setting_click',
@@ -88,12 +77,11 @@ export const Setting = () => {
         className='flex h-[20px] w-[20px] cursor-pointer items-center justify-center'
         onClick={handleOpen}
       >
-        <Image
+        <img
           src={images.settingIcon}
           alt='setting switch'
           width={20}
           height={20}
-          unoptimized
         />
       </div>
 
@@ -154,25 +142,24 @@ export const Setting = () => {
                 )}
               >
                 <div className='flex flex-col pb-[12px]'>
-                  {locales.map((locale) => (
-                    <Link
-                      key={locale}
-                      href={href}
-                      locale={locale}
-                      className='flex items-center py-[10px] pl-[32px] active:opacity-70'
-                      onClick={() => handleSelect(locale)}
+                  {languages.map((language) => (
+                    <button
+                      key={language.locale}
+                      type='button'
+                      className='flex items-center bg-transparent py-[10px] pl-[32px] text-left active:opacity-70'
+                      onClick={() => handleSelect(language.locale)}
                     >
                       <span
                         className={cn(
                           'text-[16px] font-[400]',
-                          locale === currentLocale
+                          language.locale === currentLocale
                             ? 'text-primary'
                             : 'text-white/90'
                         )}
                       >
-                        {i18nLabel[locale].name}
+                        {language.name}
                       </span>
-                    </Link>
+                    </button>
                   ))}
                 </div>
               </div>

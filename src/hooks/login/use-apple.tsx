@@ -1,4 +1,3 @@
-import { useLocale, useTranslations } from 'next-intl'
 import { useEffect, useRef } from 'react'
 import { useShallow } from 'zustand/shallow'
 
@@ -8,15 +7,14 @@ import { getSiteConfigClient } from '@/lib/config/site'
 
 import { removeQueryParam } from '@/lib/utils'
 import { useDramaStore } from '@/stores/drama-store'
-import { usePathname } from 'next/navigation'
-
+import { useI18n } from '@/i18n'
+import { useLocation } from "react-router-dom";
 /**
  * Apple 登陆， TT 登陆
  */
 export function useAppleLogin({ callback }: { callback: (res: any) => void }) {
-  const locale = useLocale()
-  const t = useTranslations()
-  const pathname = usePathname()
+  const { t, locale } = useI18n();
+  const pathname = useLocation().pathname;
 
   const { userInfo } = useDramaStore(
     useShallow((state) => ({
