@@ -19,13 +19,6 @@
     "prepare": "husky",
     "eslint": "eslint ."
   },
-  "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "**/*.{ts,tsx}": "tsc-files --noEmit ./src/vite-env.d.ts"
-  },
   "browserslist": [
     "> 0.5%",
     "last 2 versions",
