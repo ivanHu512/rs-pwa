@@ -16,7 +16,7 @@ export default {
       processUrls: true,
     }),
     pxToRem({
-      rootValue: 100,
+      rootValue: 16,
       propList: ["*"],
       exclude: /node_modules/i,
     }),

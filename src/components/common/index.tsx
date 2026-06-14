@@ -353,7 +353,7 @@ export default function Common() {
     const cpId = url.searchParams.get('cpId')
     reportHeart(setReportPathName(pathname), { chapter_id: cpId })
     emitReportCacheHandle()
-    const intervalId: number = setInterval(() => {
+    const intervalId: ReturnType<typeof setTimeout> = setInterval(() => {
       reportHeart(setReportPathName(pathname), currentRef.current)
     }, 30000)
     if (savedPlayEventParamsRef.current) {

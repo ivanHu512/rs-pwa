@@ -214,22 +214,8 @@ export default function Banner(props: IProps) {
                   <img
                     src={aliOssLoader({ src: addImageParams(item.pic), width: 1920 })}
                     alt='banner'
-                    className='object-cover object-[67%]'
+                    className='w-full h-full object-cover object-[67%]'
                   />
-                  {/* <div
-                    className="pointer-events-none absolute left-0 top-0 h-full w-[19%] md:pt-[66px]"
-                    style={{
-                      background:
-                        'linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0) 100%)',
-                    }}
-                  ></div>
-                  <div
-                    className="pointer-events-none absolute right-0 top-0 h-full w-[19%] md:pt-[66px]"
-                    style={{
-                      background:
-                        'linear-gradient(270deg, #000000 0%, rgba(0, 0, 0, 0) 100%)',
-                    }}
-                  ></div> */}
                 </div>
               </div>
             )
