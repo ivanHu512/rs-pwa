@@ -127,7 +127,7 @@ const Video = forwardRef<VideoRef, VideoProps>(
     /** 判断视频资源是否加载出基本信息 */
     // const [isLoadMetadata, setIsLoadMetadata] = useState(false)
     /** 控制栏隐藏倒计时句柄 */
-    const hideControlsTimerRef = useRef<NodeJS.Timeout | null>(null)
+    const hideControlsTimerRef = useRef<number | null>(null)
     /** 保存所有 playEvent 的参数，用于在 uid 存在时重新上报 */
     const savedPlayEventParamsRef = useRef<Parameters<typeof playEvent>[0][]>(
       []
@@ -266,7 +266,7 @@ const Video = forwardRef<VideoRef, VideoProps>(
      * 当 src 变化时，更新上报，重置各种状态,
      */
     useEffect(() => {
-      const heartbeatInterval: NodeJS.Timeout = setInterval(() => {
+      const heartbeatInterval: number = setInterval(() => {
         handleUploadHeartBeat()
       }, heartDelay)
       const leavePageReport = () => {
@@ -703,7 +703,7 @@ const Video = forwardRef<VideoRef, VideoProps>(
      * 视频开始播放事件
      * @param e React.SyntheticEvent<HTMLVideoElement>
      */
-    const timerRef = useRef<NodeJS.Timeout | null>(null)
+    const timerRef = useRef<number | null>(null)
     const handlePlaying = () => {
       console.log(
         'handlePlaying',

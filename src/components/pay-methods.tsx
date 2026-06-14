@@ -1,7 +1,6 @@
 'use client'
 import { ApplePay, GooglePay } from '@adyen/adyen-web'
 import { useDocumentVisibility } from 'ahooks'
-import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { useEffect, useMemo, useRef } from 'react'
 import { useShallow } from 'zustand/shallow'
@@ -164,11 +163,10 @@ export default function Methods() {
           }}
         >
           {icon2 && (
-            <Image
+            <img
               src={icon2}
               alt=''
               className='mr-2'
-              unoptimized
               height={24}
               width={40}
             />

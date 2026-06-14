@@ -12,7 +12,6 @@ import { useDramaStore } from '@/stores/drama-store'
 import { useLoginStore } from '@/stores/login-store'
 import { UserInfo } from '@/types/drama'
 import { useTranslations } from 'next-intl'
-import Image from 'next/image'
 import Script from 'next/script'
 import { useEffect, useRef, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
@@ -102,7 +101,6 @@ export default function LoginButton() {
     } catch (error) {
       Toast.show(t('login.login-fail'))
       console.warn(error)
-    } finally {
     }
   }
 
@@ -121,7 +119,9 @@ export default function LoginButton() {
       } else {
         requestLogin(res)
       }
-    } catch (error) {}
+    } catch (error) {
+      console.warn(error)
+    }
   }
 
   /** 登陆成功 */
@@ -236,13 +236,12 @@ export default function LoginButton() {
         className='relative mt-[32px] flex h-[48px] items-center justify-center rounded-[4px] bg-[#3E67B5]'
         onClick={() => handleClickLogin(2)}
       >
-        <Image
+        <img
           src={images.facebookIcon}
           alt='facebook'
           width={24}
           height={24}
           className='absolute left-4 top-1/2 -translate-y-1/2'
-          unoptimized
         />
         <p className='text-center text-[16px] font-[500] text-[rgba(255,255,255)]'>
           {t('login.login-facebook')}
@@ -255,7 +254,7 @@ export default function LoginButton() {
             className='flex h-[48px] flex-1 items-center justify-center rounded-[4px] bg-[#313131]'
             onClick={() => handleClickLogin(i.sid as any)}
           >
-            <Image src={i.icon} alt='gg' width={24} height={24} unoptimized />
+            <img src={i.icon} alt='gg' width={24} height={24} />
           </div>
         ))}
       </div>

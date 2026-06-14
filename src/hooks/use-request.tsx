@@ -1,8 +1,8 @@
-import { useLocale } from 'next-intl'
+import { useI18n } from "@/i18n";
 import { useCallback, useEffect, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
 
-import { requestH5DramaSign } from '@/lib/request'
+import { requestWithSign } from '@/lib/request'
 import { useDramaStore } from '@/stores/drama-store'
 interface IProps {
   api: string
@@ -23,7 +23,7 @@ export function useRsRequest(props: IProps) {
     dep = [],
   } = props
   const [data, setData] = useState<any>(null)
-  const local = useLocale()
+  const { locale } = useI18n()
 
   const { userInfo } = useDramaStore(
     useShallow((state) => ({
@@ -37,13 +37,13 @@ export function useRsRequest(props: IProps) {
       return
     }
     try {
-      const res = await requestH5DramaSign(api, uid, local, params)
-      onSuccess && onSuccess(res)
+      const res = await requestWithSign(api, uid, locale, params)
+      onSuccess?.(res)
       setData(res)
     } catch (e) {
-      onError && onError(e, params)
+      onError?.(e, params)
     }
-  }, [local, userInfo?.uid])
+  }, [locale, userInfo?.uid])
 
   useEffect(() => {
     if (!manual) {

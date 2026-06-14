@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { useEffect, useMemo, useState } from 'react'
 import Marquee from 'react-fast-marquee'
@@ -302,13 +301,12 @@ export default function PaySuccessModal() {
               vipSuccessModal.open ? '' : 'opacity-0'
             )}
           >
-            <Image
+            <img
               src={siteConfig?.vipBigIcon || ''}
               alt='vip'
               width={120}
               height={120}
               className='w-120px] h-[120px]'
-              unoptimized
             />
           </div>
 

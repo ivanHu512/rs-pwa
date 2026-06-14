@@ -1,5 +1,4 @@
 'use client'
-import Image from 'next/image'
 
 import { cn } from '@/lib/utils'
 
@@ -40,13 +39,12 @@ export default function ProductItem({
         </div>
       ) : null}
       <div className='flex items-center text-base font-bold'>
-        <Image
+        <img
           src={siteConfig?.coinIcon || ''}
           alt=''
           width={16}
           height={16}
           className='mr-1 h-4 w-4'
-          unoptimized
         />
         <span className='mr-1'>{coins}</span>
         {bonus ? <span className='text-white/50'>+{bonus}</span> : null}

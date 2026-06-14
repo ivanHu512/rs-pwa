@@ -1,5 +1,4 @@
 'use client'
-import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
@@ -95,7 +94,7 @@ export default function LoginSelectPopup({
         <div className='absolute right-0 top-0 h-[16px] rounded-bl-[4px] bg-[rgba(255,255,255,0.1)] px-[8px] text-[10px] font-[500] leading-[16px] text-[rgba(255,255,255,0.5)]'>
           {t('login.login-select-previous-account')}
         </div>
-        <Image
+        <img
           src={
             selectedUid === loginUserInfo?.uid
               ? images.selectedIcon
@@ -107,8 +106,7 @@ export default function LoginSelectPopup({
           className='absolute right-[16px] top-[40px] h-[16px] w-[16px]'
         />
         <div className='flex'>
-          <Image
-            unoptimized
+          <img
             src={loginUserInfo?.pic || images.defaultActor}
             alt='cover'
             width={40}
@@ -127,7 +125,7 @@ export default function LoginSelectPopup({
         <div className='backface-hidden my-[12px] h-[1px] w-[100%] origin-top scale-y-50 bg-white/10'></div>
         <div className='flex'>
           <div className='mr-[8px] flex items-center'>
-            <Image
+            <img
               src={siteConfig?.coinIcon || ''}
               alt='cover'
               width={16}
@@ -140,13 +138,12 @@ export default function LoginSelectPopup({
           </div>
           {!!loginUserInfo?.account?.vip_sec && (
             <div className='mr-[8px] flex items-center'>
-              <Image
+              <img
                 src={siteConfig?.vipIcon || ''}
                 alt='cover'
                 width={16}
                 height={16}
                 className='mr-[4px] h-[16px] w-[16px]'
-                unoptimized
               />
               <p className='min-w-[100px] text-[14px] font-[400] text-[rgba(255,255,255,0.5)]'>
                 {t('login.login-select-vip')}
@@ -169,7 +166,7 @@ export default function LoginSelectPopup({
         <div className='absolute right-0 top-0 h-[16px] rounded-bl-[4px] bg-[rgba(255,255,255,0.1)] px-[8px] text-[10px] font-[500] leading-[16px] text-[rgba(255,255,255,0.5)]'>
           {t('login.login-select-current-account')}
         </div>
-        <Image
+        <img
           src={
             selectedUid === userInfo.uid
               ? images.selectedIcon
@@ -179,11 +176,9 @@ export default function LoginSelectPopup({
           width={16}
           height={16}
           className='absolute right-[16px] top-[40px] h-[16px] w-[16px]'
-          unoptimized
         />
         <div className='flex'>
-          <Image
-            unoptimized
+          <img
             src={userInfo?.pic || images.defaultActor}
             alt='cover'
             width={40}
@@ -202,13 +197,12 @@ export default function LoginSelectPopup({
         <div className='backface-hidden my-[12px] h-[1px] w-[100%] origin-top scale-y-50 bg-white/10'></div>
         <div className='flex'>
           <div className='mr-[8px] flex items-center'>
-            <Image
+            <img
               src={getSiteConfigClient()?.coinIcon || ''}
               alt='cover'
               width={16}
               height={16}
               className='mr-[4px] h-[16px] w-[16px]'
-              unoptimized
             />
             <p className='min-w-[100px] text-[14px] font-[400] text-[rgba(255,255,255,0.5)]'>
               {(userInfo?.account?.coins || 0) +
@@ -217,13 +211,12 @@ export default function LoginSelectPopup({
           </div>
           {isUserVip(userInfo?.account) && (
             <div className='mr-[8px] flex items-center'>
-              <Image
+              <img
                 src={getSiteConfigClient()?.vipIcon || ''}
                 alt='cover'
                 width={16}
                 height={16}
                 className='mr-[4px] h-[16px] w-[16px]'
-                unoptimized
               />
               <p className='min-w-[100px] text-[14px] font-[400] text-[rgba(255,255,255,0.5)]'>
                 {t('login.login-select-vip')}

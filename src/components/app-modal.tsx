@@ -1,4 +1,3 @@
-import Image, { ImageProps, StaticImageData } from 'next/image'
 import { useTranslations } from 'next-intl'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
@@ -40,9 +39,7 @@ const AppModal: React.FC<{
     >
       <div className='relative mx-auto flex w-full max-w-xl flex-col items-center justify-center px-4'>
         {cover && (
-          <Image
-            priority
-            unoptimized
+          <img
             src={cover}
             width={350}
             height={600}

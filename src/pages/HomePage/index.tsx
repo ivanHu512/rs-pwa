@@ -8,12 +8,12 @@ import type { BookShelfItemType, HallInfoV4Response } from '@/types/hall'
 import Banner from './banner'
 import FeedbackLink from './feedback-link'
 import Popular from './popular'
-import Popup from './popup'
+// import Popup from './popup'
 import TopHeader from './top-header'
 import { getHallInfoV4 } from '@/lib/services/hallClient'
 
 export function HomePage() {
-const { locale, t } = useI18n();
+  const { locale, t } = useI18n();
   const config = useMemo(() => getSiteConfigClient(), [])
   const [hallData, setHallData] = useState<HallInfoV4Response | null>(null)
 
@@ -124,7 +124,7 @@ const { locale, t } = useI18n();
           </a>
         </div>
       </div>
-      <Popup />
+      {/* <Popup /> */}
     </>
   )
 }

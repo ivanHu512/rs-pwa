@@ -301,7 +301,7 @@ export const useDramaData = ({
    * 预加载ts文件
    */
   useEffect(() => {
-    let shotTimer: NodeJS.Timeout
+    let shotTimer: number
     if (!currentChapter.chapter_id) return
     const chapterIndex = chapterIndexMap.get(currentChapter.chapter_id) ?? -1
     if (chapterIndex === -1) return

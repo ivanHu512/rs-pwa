@@ -43,7 +43,7 @@ export default function RetentionModal() {
   const { customEventReport, payReport } = useReport()
 
   const [remaining, setRemaining] = useState(COUNTDOWN_SECONDS)
-  const timerRef = useRef<NodeJS.Timeout | null>(null)
+  const timerRef = useRef<number | null>(null)
 
   const { open, product } = openRetentionModal
 

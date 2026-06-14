@@ -1,5 +1,4 @@
 import { CARD_ICON, METHODS_INFO, getPaymentList } from '@/lib/checkout'
-import Image from 'next/image'
 import { useCheckoutStore } from '@/stores/checkout-store'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useShallow } from 'zustand/shallow'
@@ -146,15 +145,10 @@ function PayMethodV2() {
 
             const content = (
               <>
-                <Image
+                <img
                   src={icon}
                   alt=''
                   className='h-4 w-auto'
-                  unoptimized
-                  priority
-                  height={32}
-                  width={0}
-                  style={{ width: 'auto' }}
                 />
                 {isTextIconMode && (
                   <span className='ml-1 text-[12px] font-bold'>

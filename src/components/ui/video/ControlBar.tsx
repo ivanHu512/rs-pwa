@@ -59,8 +59,8 @@ const ControlBar: React.FC<IProps> = ({ showPlayType, serialNumber = 0, classNam
    * 3s，导航条消失，逻辑待定
    */
   useEffect(() => {
-    let hideTimer: NodeJS.Timeout;
-    let shotTimer: NodeJS.Timeout;
+    let hideTimer: number;
+    let shotTimer: number;
     if (controlStatus) {
       setShouldRender(true);
       shotTimer = setTimeout(() => {

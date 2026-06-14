@@ -19,7 +19,7 @@ export const useDoubleClick = ({
 }: UseDoubleClickOptions) => {
   /** 使用 useRef 存储点击次数和时间戳，避免重新渲染时丢失状态 */
   const clickCountRef = useRef(0);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<number | null>(null);
   /** 统一的处理函数，支持鼠标和触摸事件 */
   const handleEvent = useCallback(
     (event: UnifiedEvent) => {

@@ -24,7 +24,7 @@ export const throttleImmediate = <T extends unknown[]>(
   immediate: boolean = false
 ): ThrottledFunction<T> => {
   let lastExecTime = 0
-  let timeoutId: NodeJS.Timeout | undefined
+  let timeoutId: number | undefined
   let isLeadingCall = true
   const throttled = function (this: unknown, ...args: T) {
     const now = Date.now()
@@ -165,7 +165,7 @@ export function removeQueryParam(paramKey: string | string[]) {
  * URL 参数管理工具类
  */
 export class URLManager {
-  private updateTimeout: NodeJS.Timeout | null = null
+  private updateTimeout: number | null = null
   private pendingParams: Map<string, string | null> = new Map()
   private readonly defaultDebounceDelay: number = 300
 

@@ -1,5 +1,4 @@
 'use client'
-import Image from 'next/image'
 import { useParams, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -402,13 +401,12 @@ export default function PayModal() {
           <div className='sticky top-0 z-10 flex items-center border-b border-white/10 bg-background px-4 py-4 text-[16px] font-bold leading-[normal]'>
             <span className='mr-2'>{t('checkout.balance')}</span>
 
-            <Image
+            <img
               src={siteConfig?.coinIcon || ''}
               alt=''
               width={20}
               height={20}
               className='mr-1 h-5 w-5'
-              unoptimized
             />
 
             <span>{balance}</span>
@@ -420,13 +418,12 @@ export default function PayModal() {
           <div className='h-full touch-pan-y overflow-y-auto overflow-x-hidden px-4'>
             {/* <div className="mt-6 flex items-center font-bold">
               <span className="mr-2">{t("checkout.balance")}</span>
-              <Image
+              <img
                 src={siteConfig?.coinIcon || ""}
                 alt=""
                 width={20}
                 height={20}
                 className="mr-1 h-5 w-5"
-                unoptimized
               />
               <span>{balance}</span>
             </div> */}

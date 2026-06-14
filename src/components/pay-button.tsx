@@ -2,7 +2,6 @@ import { useCheckoutStore } from '@/stores/checkout-store'
 import { useShallow } from 'zustand/shallow'
 import { useCheckout } from '@/hooks/use-checkout'
 import { METHODS_INFO } from '@/lib/checkout'
-import Image from 'next/image'
 import { useReport } from '@/hooks/use-report'
 
 export default function PayButton() {
@@ -56,11 +55,10 @@ export default function PayButton() {
         }}
       >
         {displayIcon && (
-          <Image
+          <img
             src={displayIcon}
             alt=''
             className='mr-1 h-4 w-auto'
-            unoptimized
             height={32}
             width={0}
             style={{ width: 'auto' }}

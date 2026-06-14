@@ -1,6 +1,5 @@
 'use client'
 import { getSiteConfigClient } from '@/lib/config/site'
-import Image from 'next/image'
 import { images } from '@/assets/images'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
@@ -100,9 +99,8 @@ export default function SubscriptionPage() {
     <div className='mx-auto max-w-xl'>
       <div className='flex h-[40px] items-center justify-center'>
         {isMounted && siteConfig && (
-          <Image
+          <img
             alt={siteConfig.title}
-            unoptimized
             width={127}
             height={24}
             src={siteConfig.headerLogo || ''}
@@ -162,11 +160,9 @@ export default function SubscriptionPage() {
                 <div className='border-b border-white/10 pb-[16px]'>
                   <div className='flex space-x-[8px]'>
                     <div className='flex h-[24px] w-[24px] items-center justify-center'>
-                      <Image
+                      <img
                         src={siteConfig?.vipIcon || ''}
                         alt=''
-                        unoptimized
-                        priority
                         width={48}
                         height={48}
                       />

@@ -1,7 +1,6 @@
 "use client";
 
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import Image from "next/image";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
@@ -75,12 +74,11 @@ function DialogContent({
             className="rounded-xs absolute right-4 top-4"
           >
             {/* <XIcon /> */}
-            <Image
+            <img
               src="https://v-mps.crazymaplestudios.com/images/d69d4480-c528-11f0-84ad-6b5693b490dc.png"
               alt="close"
               width={24}
               height={24}
-              unoptimized
             />
             <span className="sr-only">Close</span>
           </DialogPrimitive.Close>

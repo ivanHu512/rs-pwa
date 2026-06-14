@@ -1,4 +1,3 @@
-import Image, { ImageProps, StaticImageData } from 'next/image'
 import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -204,7 +203,7 @@ const DramaPopup: React.FC = () => {
    */
   useEffect(() => {
     let scrollContainer: Element | null = null
-    let timeoutId: NodeJS.Timeout
+    let timeoutId: number
     const handleScroll = () => {
       if (titleRef.current) {
         const titleRect = titleRef.current.getBoundingClientRect()
@@ -244,12 +243,11 @@ const DramaPopup: React.FC = () => {
           <div className='relative h-[113px] w-[80px]'>
             <div className='relative h-full w-full'>
               {loadStatus !== ImageLoadStatus.FAIL && (
-                <Image
+                <img
                   src={bookDetail.book_pic}
                   alt={''}
                   className={cn('h-full w-full rounded-[4px] object-cover')}
                   width={113}
-                  unoptimized
                   height={80}
                   onLoad={() => {
                     setLoadStatus(ImageLoadStatus.SUCCESS)

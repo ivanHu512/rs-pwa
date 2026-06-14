@@ -1,5 +1,4 @@
 'use client'
-import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import React, {
   startTransition,
@@ -95,7 +94,9 @@ const PwaGuide: React.FC = () => {
       return
     }
     const isPwaEnv = detectionPwaStandalone()
-    isPwaEnv && localStorage.setItem(localKeyPwaStatus, '1')
+    if (isPwaEnv) {
+      localStorage.setItem(localKeyPwaStatus, '1')
+    }
     const isPwaLocalStatus = localStorage.getItem(localKeyPwaStatus)
     console.log(
       '__deferredPrompt',
@@ -163,11 +164,10 @@ const PwaGuide: React.FC = () => {
           onClick={handlePwaAction}
         >
           <div className='flex items-center'>
-            <Image
+            <img
               alt={siteConfig?.title || ''}
               className='mr-[8px] rounded-[8px]'
               style={{ border: siteConfig?.pwaBorderColor }}
-              unoptimized
               loading='lazy'
               width={40}
               height={40}
@@ -189,10 +189,9 @@ const PwaGuide: React.FC = () => {
             setIsBrowserTipVisible(false)
           }}
         >
-          <Image
+          <img
             alt={siteConfig?.title || ''}
             className='my-[8px] mr-[16px]'
-            unoptimized
             loading='lazy'
             width={42}
             height={54}
@@ -258,10 +257,9 @@ const GuideProcess: React.FC<GuideProcessProps & { siteTitle: string }> = ({
         <span className='mb-[8px] text-[14px] font-[400] text-white'>
           {title}
         </span>
-        <Image
+        <img
           alt={siteTitle}
           className='h-auto w-full'
-          unoptimized
           loading='lazy'
           width={350}
           height={83}

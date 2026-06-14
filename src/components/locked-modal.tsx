@@ -21,7 +21,7 @@ const LockedModal: React.FC<PlayerBtnProps> = ({ isOpen, onOpenChange }) => {
   const t = useTranslations()
   const [isVisible, setIsVisible] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const timeoutRef = useRef<number | null>(null)
   const rafRef = useRef<number | null>(null)
   const setOpenPayModal = useCheckoutStore((state) => state.setOpenPayModal)
   /**
