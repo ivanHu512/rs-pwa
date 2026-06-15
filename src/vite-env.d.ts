@@ -48,6 +48,11 @@ declare global {
     variantPlayer?: string;
     language?: string;
     __rum?: any;
+    gtag?: (
+      command: "event",
+      eventName: string,
+      params?: Record<string, any>,
+    ) => void;
     isNotInit?: boolean;
   }
 

@@ -1,5 +1,3 @@
-import { sendGAEvent } from '@next/third-parties/google'
-
 import { fbqEvent } from '@/components/facebook-pixel'
 import { tiktokEvent, TikTokEvents } from '@/components/tiktok-pixel'
 
@@ -7,6 +5,14 @@ type PixelParams = {
   story_id: string
   amount?: number
   product_name?: string
+}
+
+const sendGAEvent = (
+  command: 'event',
+  eventName: string,
+  params?: Record<string, any>
+) => {
+  window.gtag?.(command, eventName, params)
 }
 
 export const pixelAddCart = (data: PixelParams) => {

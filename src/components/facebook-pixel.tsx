@@ -1,14 +1,46 @@
-"use client";
-
-import { useLocation, useSearchParams } from "react-router-dom";
-import Script from "next/script";
 import { useEffect } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 declare global {
   interface Window {
     fbq: any;
+    _fbq?: any;
   }
 }
+
+const FACEBOOK_PIXEL_SCRIPT_ID = "fb-pixel-script";
+const initializedPixelIds = new Set<string>();
+
+const loadFacebookPixelScript = () => {
+  if (document.getElementById(FACEBOOK_PIXEL_SCRIPT_ID)) {
+    return;
+  }
+
+  window.fbq =
+    window.fbq ||
+    function (...args: any[]) {
+      if (window.fbq.callMethod) {
+        window.fbq.callMethod(...args);
+        return;
+      }
+      (window.fbq.queue = window.fbq.queue || []).push(args);
+    };
+
+  if (!window._fbq) {
+    window._fbq = window.fbq;
+  }
+
+  window.fbq.push = window.fbq;
+  window.fbq.loaded = true;
+  window.fbq.version = "2.0";
+  window.fbq.queue = window.fbq.queue || [];
+
+  const script = document.createElement("script");
+  script.id = FACEBOOK_PIXEL_SCRIPT_ID;
+  script.async = true;
+  script.src = "https://connect.facebook.net/en_US/fbevents.js";
+  document.head.appendChild(script);
+};
 
 export const FacebookPixel = () => {
   const pathname = useLocation().pathname;
@@ -20,17 +52,13 @@ export const FacebookPixel = () => {
   useEffect(() => {
     if (!pixelId) return;
 
-    // Initialize Facebook Pixel
-    window.fbq =
-      window.fbq ||
-      function (...args: any[]) {
-        (window.fbq.q = window.fbq.q || []).push(args);
-      };
+    loadFacebookPixelScript();
 
-    window.fbq("init", pixelId);
-    window.fbq("track", "PageView");
+    if (!initializedPixelIds.has(pixelId)) {
+      window.fbq("init", pixelId);
+      initializedPixelIds.add(pixelId);
+    }
 
-    // Track page view on route change
     const url = `${pathname}${searchParams?.toString() ? `?${searchParams.toString()}` : ""}`;
     window.fbq("track", "PageView", { url });
   }, [pathname, searchParams, pixelId]);
@@ -40,33 +68,15 @@ export const FacebookPixel = () => {
   }
 
   return (
-    <>
-      <Script
-        id="fb-pixel-script"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-          `,
-        }}
+    <noscript>
+      <img
+        height="1"
+        width="1"
+        style={{ display: "none" }}
+        src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
+        alt=""
       />
-      <noscript>
-        <img
-          height="1"
-          width="1"
-          style={{ display: "none" }}
-          src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
-          alt=""
-        />
-      </noscript>
-    </>
+    </noscript>
   );
 };
 

@@ -44,7 +44,7 @@ armsRum.init({
   tracing: false,
 });
 
-window.armsRum = armsRum;
+window.__rum = armsRum;
 
 export default armsRum;
 
@@ -58,7 +58,7 @@ export const armsPayReport = (
   type: armsPayType,
   properties?: Record<string, any>
 ) => {
-  window?.armsRum?.sendCustom?.({
+  window?.__rum?.sendCustom?.({
     name: 'pay',
     group: '支付',
     type,
