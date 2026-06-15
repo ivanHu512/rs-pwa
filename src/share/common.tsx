@@ -3,14 +3,13 @@ import { v4 as uuidv4 } from 'uuid'
 import { useShallow } from 'zustand/shallow'
 
 import { useReport } from '@/hooks/use-report'
-import { generateArmsScript } from '@/lib/arms'
-import { localKeyUid, sessionKeyTraceId } from '@/lib/constant'
+import armsRum from "@/lib/arms";
+import { sessionKeyTraceId } from '@/lib/constant'
 import { setReportPathName } from '@/lib/index'
 import { emitReportCacheHandle, reportSDK } from '@/lib/report'
 import { uploadH5VideoUrlReport } from '@/lib/services/book'
 import { detectionPwaStandalone, visibilityProperties } from '@/lib/utils'
 import { useDramaStore } from '@/stores/drama-store'
-import { getLocalStorage } from '@/lib/storageUtils'
 import PaySuccessModal from '@/components/success-modal'
 import LoginPopup from '@/components/login-popup'
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
@@ -99,16 +98,6 @@ export default function Common() {
     reportSDK.installReport({
       _story_id: id,
       _page_name: 'player',
-    })
-    import('@arms/rum-browser').then((armsRum) => {
-      armsRum.default.init(generateArmsScript())
-      const uId = getLocalStorage(localKeyUid)
-      if (uId) {
-        armsRum.default?.setConfig('user', {
-          name: uId,
-        })
-      }
-      window.__rum = armsRum.default
     })
     if (!('PerformanceObserver' in window)) return
     const supportedEntries =
@@ -375,11 +364,16 @@ export default function Common() {
       return
     }
     try {
-      window.__rum?.setConfig('user', {
-        name: userInfo?.uid,
-      })
-    } catch {
-      console.log("error")
+      (
+        armsRum as unknown as {
+          setConfig?: (key: string, value: Record<string, unknown>) => void;
+        }
+      ).setConfig?.("user", {
+        name: String(userInfo.uid),
+      });
+      emitReportCacheHandle();
+    } catch (error) {
+      console.error("[arms] set user failed", error);
     }
   }, [userInfo?.uid])
 

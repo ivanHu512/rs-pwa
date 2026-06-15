@@ -10,6 +10,9 @@ export default defineConfig(() => {
   return {
     // 与配置文件同目录，避免从其它 cwd 启动时找不到 index.html / postcss.config
     root: path.resolve(__dirname),
+    define: {
+      global: "globalThis",
+    },
     css: {
       // 显式指定 postcss-load-config 的搜索目录（默认同 config.root，此处与 vite 配置目录对齐）
       postcss: path.resolve(__dirname),
@@ -64,6 +67,9 @@ export default defineConfig(() => {
     optimizeDeps: {
       esbuildOptions: {
         target: "es2015",
+        define: {
+          global: "globalThis",
+        },
       },
     },
   };

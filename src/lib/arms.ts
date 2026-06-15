@@ -1,51 +1,52 @@
-type envType = 'local' | 'daily' | 'gray' | 'prod'
-const envMap: Record<string, envType> = {
-  development: 'local',
-  test: 'daily',
-  gray: 'gray',
-  production: 'prod',
-} as const
+import armsRum from "@arms/rum-browser";
 
-export function generateArmsScript() {
-  const env = envMap[import.meta.env.VITE_APP_ENV || 'development']
-  return {
-    pid: '1fw35mn5y7h@7fba2ddeae7ab9b',
-    endpoint: 'https://1fw35mn5y7h-default-sea.rum.aliyuncs.com',
-    env,
-    sessionConfig: {
-      sampleRate: env === 'prod' ? 0.01 : 1,
-    },
+const ARMS_ENDPOINT =
+  "https://proj-xtrace-11267653def45730d450c2c832d128d5-ap-southeast-1.ap-southeast-1.log.aliyuncs.com/rum/web/v2?workspace=default-cms-5270080652696429-ap-southeast-1&service_id=1fw35mn5y7h@79bab11db7ff5b78e81f8";
 
-    collectors: {
-      staticResource: false,
-    },
-    filters: {
-      exception: [
-        'Apple',
-        'The request is not',
-        'GooglePay',
-        'Apple Pay is not available',
-        'One or more securedFields',
-      ],
-    },
-    evaluateApi: async (options: any) => {
-      if (options.url !== '/api/video/store/createThirdPayOrder') {
-        return {}
-      }
-      const body = JSON.parse(options.body || '{}')
-      const type = body.payType === 1 ? 'paypal' : 'adyen'
+const resolveArmsEnv = (): "prod" | "gray" | "pre" | "daily" | "local" => {
+  const appEnv = import.meta.env.VITE_APP_ENV;
 
-      return {
-        name: 'createThirdPayOrder/' + type,
-        snapshots: JSON.stringify(options.headers),
-        properties: {
-          uid: localStorage.getItem('uid'),
-        },
-      }
-    },
-    remoteConfig: true,
+  if (appEnv === "prod") {
+    return "prod";
   }
-}
+
+  if (appEnv === "gray") {
+    return "gray";
+  }
+
+  if (appEnv === "test") {
+    return "daily";
+  }
+
+  return import.meta.env.DEV ? "local" : "daily";
+};
+
+const resolveArmsSampleRate = () => {
+  return import.meta.env.VITE_APP_ENV === "prod" ? 0.01 : 100;
+};
+
+armsRum.init({
+  endpoint: ARMS_ENDPOINT,
+  env: resolveArmsEnv(),
+  spaMode: "history",
+  sessionConfig: {
+    sampleRate: resolveArmsSampleRate(),
+  },
+  collectors: {
+    perf: true,
+    webVitals: true,
+    api: true,
+    staticResource: true,
+    jsError: true,
+    consoleError: true,
+    action: true,
+  },
+  tracing: false,
+});
+
+window.armsRum = armsRum;
+
+export default armsRum;
 
 /** Event type */
 type armsPayType = 'pay_complete'
@@ -57,7 +58,7 @@ export const armsPayReport = (
   type: armsPayType,
   properties?: Record<string, any>
 ) => {
-  window?.__rum?.sendCustom?.({
+  window?.armsRum?.sendCustom?.({
     name: 'pay',
     group: '支付',
     type,
