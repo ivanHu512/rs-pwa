@@ -179,7 +179,7 @@ const VideoItems: React.FC<DramaProps> = (props) => {
   })
 
   /** 防抖定时器引用，用于快速滑动时的防抖处�?*/
-  const slideChangeTimerRef = useRef<number | null>(null)
+  const slideChangeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   /** 上一次切换的章节ID，用于避免重复切�?*/
   const lastChapterIdRef = useRef<string | null>(null)

@@ -47,11 +47,11 @@ class Toast {
       duration = options.duration ?? DEFAULT_DURATION
     }
 
-    duration &&
+    if(duration) {
       setTimeout(() => {
         close()
       }, duration)
-
+    }
     ReactDOM.createRoot(container).render(<ToastContent content={content} />)
   }
 }

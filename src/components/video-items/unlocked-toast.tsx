@@ -22,7 +22,7 @@ const UnlockedToast: React.FC = () => {
    * 3s，导航条消失
    */
   useEffect(() => {
-    let timer: number
+    let timer: ReturnType<typeof setTimeout>
     if (lockedToastVisible) {
       requestAnimationFrame(() => {
         setIsVisible(true)

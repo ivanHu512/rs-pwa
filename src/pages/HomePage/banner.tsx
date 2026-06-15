@@ -52,10 +52,10 @@ export default function Banner(props: IProps) {
   const activeBanner = bannerList[current]
   const { locale, t } = useI18n();
   /** 自动轮播 */
-  const stopInterval = useRafInterval(() => {
-    const len = bannerList.length
-    setCurrent((current) => (current + 1) % len)
-  }, autoInterval)
+  // const stopInterval = useRafInterval(() => {
+  //   const len = bannerList.length
+  //   setCurrent((current) => (current + 1) % len)
+  // }, autoInterval)
 
   useEffect(() => {
     if (autoInterval === undefined) {

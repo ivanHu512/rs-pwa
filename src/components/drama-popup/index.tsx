@@ -202,7 +202,7 @@ const DramaPopup: React.FC = () => {
    */
   useEffect(() => {
     let scrollContainer: Element | null = null
-    let timeoutId: number
+    let timeoutId: ReturnType<typeof setTimeout>
     const handleScroll = () => {
       if (titleRef.current) {
         const titleRect = titleRef.current.getBoundingClientRect()

@@ -75,8 +75,8 @@ const Header: React.FC<IProps> = ({ className, isShow, style = {} }) => {
    */
   useEffect(() => {
     if (isShow) return
-    let hideTimer: number
-    let shotTimer: number
+    let hideTimer: ReturnType<typeof setTimeout>
+    let shotTimer: ReturnType<typeof setTimeout>
     if (controlStatus) {
       setShouldRender(true)
       shotTimer = setTimeout(() => {

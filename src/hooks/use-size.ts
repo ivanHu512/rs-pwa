@@ -40,7 +40,7 @@ export function useWindowSize(): WindowSize {
      * 监听横竖屏切换
      * 延迟 100ms 获取实际尺寸
      */
-    let orientationTimer: number | null = null
+    let orientationTimer: ReturnType<typeof setTimeout> | null = null
     const handleOrientationChange = () => {
       clearTimeout(orientationTimer!)
       orientationTimer = setTimeout(handleResize, 100)
@@ -50,7 +50,7 @@ export function useWindowSize(): WindowSize {
     handleResize()
 
     const delayTimings = [300, 800, 1300, 2500]
-    const timers: Array<number> = []
+    const timers: Array<ReturnType<typeof setTimeout>> = []
     /**延迟调用3次，获取safari浏览器窗口变动尺寸, 有些设备窗口变动较慢 */
     delayTimings.forEach((delay) => {
       const timerId = setTimeout(() => {

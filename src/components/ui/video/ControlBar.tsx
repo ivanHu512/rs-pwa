@@ -30,7 +30,7 @@ interface IProps {
   showPlayType: VideoPlayBtnTypeEnum;
 }
 /**
- * 短剧控制栏组�?
+ * 短剧控制栏组�?
  * 功能：显示当前话数、提供全屏切换功能，支持自动隐藏
  */
 const ControlBar: React.FC<IProps> = ({ showPlayType, serialNumber = 0, className, children, onVolume }) => {
@@ -51,7 +51,7 @@ const ControlBar: React.FC<IProps> = ({ showPlayType, serialNumber = 0, classNam
   const { request } = useRequestIdle()
   const [isVisible, setIsVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
-  /** 控制条区�?*/
+  /** 控制条区�?*/
   const controlBarRef = useRef<HTMLDivElement>(null);
   const currentSerialNumber = currentChapter.serial_number || 0
   const totalChapterNum = chapterList[chapterList.length - 1]?.serial_number ?? serialNumber;
@@ -59,8 +59,8 @@ const ControlBar: React.FC<IProps> = ({ showPlayType, serialNumber = 0, classNam
    * 3s，导航条消失，逻辑待定
    */
   useEffect(() => {
-    let hideTimer: number;
-    let shotTimer: number;
+    let hideTimer: ReturnType<typeof setTimeout>;
+    let shotTimer: ReturnType<typeof setTimeout>;
     if (controlStatus) {
       setShouldRender(true);
       shotTimer = setTimeout(() => {
@@ -80,7 +80,7 @@ const ControlBar: React.FC<IProps> = ({ showPlayType, serialNumber = 0, classNam
     };
   }, [controlStatus]);
   /**
-   * 原生触摸事件监听�?
+   * 原生触摸事件监听�?
    * 消除父元素副作用
    */
   useEffect(() => {

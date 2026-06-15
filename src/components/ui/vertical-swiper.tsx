@@ -223,7 +223,7 @@ const handleWheel = useCallback((e: WheelEvent) => {
   /** 
    * 触发移动动画之后，需要取消动画效果
    */
-  const transitionTimerRef = useRef<number | null>(null);
+  const transitionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
     if (transitionTimerRef.current) {
       clearTimeout(transitionTimerRef.current);

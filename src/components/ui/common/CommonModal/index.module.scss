@@ -1,0 +1,17 @@
+.modal-container {
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  background-image:
+    linear-gradient(to bottom, transparent, transparent),
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 15%,
+      transparent 90%
+    );
+}
+
+

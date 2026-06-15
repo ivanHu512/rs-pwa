@@ -44,7 +44,7 @@ export const Setting = () => {
     if (currentLocale === locale) return;
     setLocalStorage("language", locale);
     setLocale(locale);
-    navigate(locale === "en" ? "/" : `/${locale}`);
+    // navigate(locale === "en" ? "/" : `/${locale}`);
     reportSDK.eventReport({
       event_name: "m_custom_event",
       sub_event_name: "setting_click",

@@ -38,34 +38,6 @@
   src: url('https://v-mps.crazymaplestudios.com/fonts/NotoNaskhArabic-Bold.ttf');
 }
 
-
-/* Regular 400 */
-/* @font-face {
-  font-family: 'Noto Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: url("/fonts/NotoSans-Regular.woff2") format("woff2");
-  font-display: swap;
-} */
-
-/* Medium 500 */
-/* @font-face {
-  font-family: 'Noto Sans';
-  font-style: normal;
-  font-weight: 500;
-  src: url("/fonts/NotoSans-Medium.woff2") format("woff2");
-  font-display: swap;
-} */
-
-/* Bold 700 */
-/* @font-face {
-  font-family: 'Noto Sans';
-  font-style: normal;
-  font-weight: 700;
-  src: url("/fonts/NotoSans-Bold.woff2") format("woff2");
-  font-display: swap;
-} */
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -135,15 +107,6 @@
     /* font-family: var(--font-sans); */
   }
 }
-
-/* img {
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-perspective: 1000;
-  perspective: 1000;
-} */
 
 body {
   touch-action: pan-x pan-y;

@@ -125,7 +125,7 @@ const Video = forwardRef<VideoRef, VideoProps>(
     /** 实时设置进度条播放时�?*/
     const [currentTime, setCurrentTime] = useState(0)
     /** 控制栏隐藏倒计时句�?*/
-    const hideControlsTimerRef = useRef<number | null>(null)
+    const hideControlsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
     /** 保存所�?playEvent 的参数，用于�?uid 存在时重新上�?*/
     const savedPlayEventParamsRef = useRef<Parameters<typeof playEvent>[0][]>(
       []
@@ -257,7 +257,7 @@ const Video = forwardRef<VideoRef, VideoProps>(
       errorTrackRef.current = false
       manualPlayRef.current = false
       isMetaCanPlayRef.current = true
-      const heartbeatInterval: number = setInterval(() => {
+      const heartbeatInterval: ReturnType<typeof setTimeout> = setInterval(() => {
         handleUploadHeartBeat()
       }, heartDelay)
       const leavePageReport = () => {
@@ -365,10 +365,10 @@ const Video = forwardRef<VideoRef, VideoProps>(
         //       : historyPlayProgress.currentTime
         //   video.currentTime = progress || 0
         // }
-        console.log('进度�?, currentChapter?.playTime)
-        video.currentTime = currentChapter?.playTime || 0
-        const isSupportConnection = 'connection' in navigator
-        const customNavigator: NavigatorWithConnection = navigator
+        console.log('进度', currentChapter?.playTime);
+        video.currentTime = currentChapter?.playTime || 0;
+        const isSupportConnection = 'connection' in navigator;
+        const customNavigator: NavigatorWithConnection = navigator;
         const currentTime = Date.now()
         saveAndPlayEvent({
           subEventName: 'play_load_meta_data',
@@ -480,7 +480,9 @@ const Video = forwardRef<VideoRef, VideoProps>(
             return
           }
           videoRef.current.muted = true
-          !isMuted && (manualPlayRef.current = false)
+          if(!isMuted) {
+            manualPlayRef.current = false
+          }
           videoRef.current?.play().catch(console.error)
         }
       }
@@ -718,7 +720,7 @@ const Video = forwardRef<VideoRef, VideoProps>(
      * 视频开始播放事�?
      * @param e React.SyntheticEvent<HTMLVideoElement>
      */
-    const timerRef = useRef<number | null>(null)
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
     const handlePlaying = () => {
       console.log('playing', id, handleSeekRef.current)
       if (!navigator.onLine) return

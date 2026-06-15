@@ -93,7 +93,7 @@ export const CollapsibleText: React.FC<CollapsibleTextProps> = ({
         <div
           onClick={() => {
             setIsExpanded(true);
-            onMoreClick && onMoreClick();
+            onMoreClick?.();
           }}
           className="absolute bottom-0 right-[-1px] flex cursor-pointer items-center text-[14px] leading-[normal]"
         >
