@@ -123,7 +123,8 @@ export interface PageRef {
 }
 
 export interface VideoRef {
-  progressMapRef: BookVideoProgressMap
+  progressMapRef: () => number;
+  // progressMapRef: BookVideoProgressMap
 }
 
 /**登录参数 */
@@ -146,20 +147,19 @@ export interface LoginParams {
  * 短剧初始化数据类型
  */
 export interface MoveVideoProps {
-  newContainer: HTMLElement | null
-  chapterId: string
-  url: string
+  newContainer: HTMLDivElement | null
+  chapterId?: string
+  url?: string
   pic?: string
 }
 
 export type VideoPlayerVariant = 'ali' | 'native'
 
 export interface DramaProps {
-  bookInfo?: RawBookDetailResponse | null
-  preload?: Array<BookPreLoadType | ChapterItem>
-  sort?: number
-  readRecord?: ReadRecordType
-  switchToVideo?: (data: MoveVideoProps) => void
+  bookId?: string;
+  switchToVideo?: (data: MoveVideoProps) => void;
+  navigateHall?: () => void;
+  handleUnlockToast?: (isVip?: boolean) => void;
 }
 
 /**

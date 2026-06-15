@@ -18,7 +18,7 @@ const LockedModal: React.FC<PlayerBtnProps> = ({ payDrawerRef, isOpen }) => {
   const { t } = useI18n();
   const [isVisible, setIsVisible] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-  const timeoutRef = useRef<number | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rafRef = useRef<number | null>(null);
   /**
    * 控制组件状态

@@ -4,7 +4,6 @@ import { useShallow } from "zustand/shallow";
 
 import { cn, isUserVip } from "@/lib/utils";
 import { useDramaStore } from "@/stores/drama-store";
-import { useAppStore } from "@/stores/app-store";
 import { ChapterLockStatus, VideoType, VipRewardTypeEnum } from "@/types/drama";
 
 interface ChapterCardProps {
@@ -22,8 +21,15 @@ const ChapterCard: React.FC<ChapterCardProps> = ({
   serial_number,
   video_type,
 }) => {
-  const currentChapter = useDramaStore((state) => state.currentChapter);
-  const userInfo = useAppStore((state) => state.userInfo);
+  const {
+    userInfo,
+    currentChapter
+  } = useDramaStore(
+    useShallow((state) => ({
+      userInfo: state.userInfo,
+      currentChapter: state.currentChapter,
+    })),
+  );
   const accountInfo = userInfo?.account;
   const { t } = useI18n();
 

@@ -6,37 +6,30 @@ import {
   useEffect,
   useState,
   useRef,
-  CSSProperties,
-  useLayoutEffect,
+  CSSProperties
 } from "react";
 import { ExposeRef, VideoRef, ChapterLockStatus } from "@/types/drama";
-import { useDramaData } from "@/hooks/useDramaData";
-import { useVideoPool } from "@/hooks/useVideoPool";
-import { usePerformance } from "@/hooks/usePerformance";
-import { useNavChapter } from "@/hooks/useNavChapter";
+import { useDramaData } from "@/hooks/use-drama-data";
+import { useVideoPool } from "@/hooks/use-video-pool";
+import { usePerformance } from "@/hooks/use-performance";
+import { useNavChapter } from "@/hooks/use-nav-chapter";
 import { useDramaStore } from "@/stores/drama-store";
 import { useShallow } from "zustand/shallow";
 import { getRangeAroundIndex } from "@/lib/utils";
 import { aliOssLoader } from "@/lib/aliOssLoader";
-import {
-  minisOffShare,
-  minisOnShare,
-  minisShare,
-  TTMinisShareOptions,
-} from "@/lib/minisApi";
 import Page from "./components/page";
 import CommonToast from "@/components/common/CommonToast";
 import CommonLoading from "@/components/common/CommonLoading";
 import PlayerContainer from "./components/playerContainer/Index";
 import ChapterDrawer from "./components/chapterDrawer/Index";
-import PayDrawer from "@/components/specific/PayDrawer";
+import PayModal from '@/components/pay-modal'
+import RetentionModal from '@/components/retention-modal'
+// import PayDrawer from "@/components/specific/PayDrawer";
 import CoinsUnlockToast from "./components/toasts/CoinsUnlockToast";
 import VipUnlockToast from "./components/toasts/VipUnlockToast";
 import { NormalPopupRef } from "@/types/common";
 import { useReport } from "@/hooks/use-report";
 import { v4 as uuidv4 } from "uuid";
-import { getRecommendBook } from "@/lib/services/drama";
-import { getReportPageName, setPlayerPrePageName } from "@/lib/report";
 
 /** 开始滑动之后的延迟时间，用于快速请求接口 */
 const animateDelay = 100;
@@ -50,7 +43,7 @@ export function DramaPage() {
   const navigate = useNavigate();
   const { navigateToChapter } = useNavChapter();
   /** 防抖定时器引用，用于快速滑动时的防抖处理 */
-  const slideChangeTimerRef = useRef<number | null>(null);
+  const slideChangeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   /** 章节详情接口是否请求完成 */
   const loadContentRef = useRef<boolean>(false);
   /** swiper对象 */
@@ -68,7 +61,7 @@ export function DramaPage() {
   /** 是否谈过解锁成功弹窗 */
   const isShowToastStatusRef = useRef<boolean>(false);
 
-  const { playEvent, reportRecommendBooks } = useReport();
+  const { playEvent } = useReport();
 
   const {
     isApiError,
@@ -95,7 +88,6 @@ export function DramaPage() {
       setShowControls: state.setShowControls,
     })),
   );
-  const shareOptionsRef = useRef<TTMinisShareOptions | null>(null);
 
   /** 性能埋点 */
   usePerformance({ chapterId: currentChapter?.chapter_id });
@@ -143,56 +135,6 @@ export function DramaPage() {
     currentIndexRef.current = sortOrder;
   }, [sortOrder]);
 
-  useEffect(() => {
-    if (!id || !bookDetail.book_title) {
-      shareOptionsRef.current = null;
-      return;
-    }
-
-    shareOptionsRef.current = {
-      title: bookDetail.book_title,
-      desc: bookDetail.special_desc,
-      imageUrl: bookDetail.book_pic,
-    };
-    console.log("shareOptionsRef", shareOptionsRef);
-  }, [bookDetail.book_pic, bookDetail.book_title, bookDetail.special_desc, id]);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.TTMinis) {
-      return;
-    }
-
-    let callbackId: string | null = null;
-
-    try {
-      callbackId = minisOnShare(() => {
-        const shareOptions = shareOptionsRef.current;
-
-        if (!shareOptions) {
-          return;
-        }
-
-        minisShare(shareOptions).catch((error) => {
-          console.error("[minis-share] share failed", error);
-        });
-      });
-    } catch (error) {
-      console.error("[minis-share] bind share listener failed", error);
-    }
-
-    return () => {
-      if (!callbackId) {
-        return;
-      }
-
-      try {
-        minisOffShare(callbackId);
-      } catch (error) {
-        console.error("[minis-share] unbind share listener failed", error);
-      }
-    };
-  }, []);
-
   /**
    * 当前视频播放结束, 自动切换下一章
    * @param index 章节下标
@@ -202,21 +144,21 @@ export function DramaPage() {
       /** 播放结束，唤起二部剧 */
       if (chapterId === chapterList[chapterList.length - 1]?.chapter_id) {
         updateDrawerVisible(false);
-        getRecommendBook(id).then((res) => {
-          const { book_id, book_title = "" } = res?.book || {};
-          if (book_id) {
-            const currentPageName = getReportPageName(location.pathname);
-            setPlayerPrePageName(currentPageName);
-            window.shelf_id = 30003;
-            navigate(`/drama/${book_id}`, { replace: true });
-            CommonToast.show(t("video.recommend", { name: book_title }));
-            reportRecommendBooks({
-              _action: "toast",
-              rec_scene: 21,
-              _story_id: book_id,
-            });
-          }
-        });
+        // getRecommendBook(id).then((res) => {
+        //   const { book_id, book_title = "" } = res?.book || {};
+        //   if (book_id) {
+        //     const currentPageName = getReportPageName(location.pathname);
+        //     setPlayerPrePageName(currentPageName);
+        //     window.shelf_id = 30003;
+        //     navigate(`/drama/${book_id}`, { replace: true });
+        //     CommonToast.show(t("video.recommend", { name: book_title }));
+        //     reportRecommendBooks({
+        //       _action: "toast",
+        //       rec_scene: 21,
+        //       _story_id: book_id,
+        //     });
+        //   }
+        // });
       } else {
         const chapter = chapterList[currentIndexRef.current + 1];
         if (chapter) {
@@ -475,11 +417,14 @@ export function DramaPage() {
       {/* 底部章节详情弹窗 */}
       <ChapterDrawer swiperRef={swiperRef} />
       {/* 拉起商城列表 */}
-      <PayDrawer
+      {/* <PayDrawer
         ref={payDrawerRef}
         episodePrice={currentChapter?.unlock_cost}
         onPaySuccess={handlePlayerPaySuccess}
-      />
+      /> */}
+      <PayModal />
+      {/* 挽留弹窗 */}
+      <RetentionModal />
       {/*手势指引*/}
       {guideHandStatus && (
         <div

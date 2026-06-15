@@ -2,7 +2,7 @@ import { KeepAlive } from "react-activation";
 import { createBrowserRouter } from "react-router-dom";
 import { AppLayout } from "./layouts/AppLayout";
 // import { RootLayout } from "./layouts/RootLayout";
-// import { DramaPage } from "./pages/DramaPage";
+import { DramaPage } from "./pages/DramaPage";
 import { HomePage } from "./pages/HomePage";
 // import { LanguageSelectPage } from "./pages/LanguageSelectPage";
 // import { MyHistoryPage } from "./pages/MyHistoryPage";
@@ -67,10 +67,10 @@ export const router = createBrowserRouter([
       //     { path: "*", element: <NotFoundPage /> },
       //   ],
       // },
-      // {
-      //   path: "/drama/:id",
-      //   element: <DramaPage />,
-      // },
+      {
+        path: "/drama/:id",
+        element: <DramaPage />,
+      },
       // {
       //   path: "/language",
       //   element: <LanguageSelectPage />,

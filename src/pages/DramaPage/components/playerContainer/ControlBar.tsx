@@ -62,8 +62,8 @@ const ControlBar: React.FC<IProps> = ({
    * 3s，导航条消失，逻辑待定
    */
   useEffect(() => {
-    let hideTimer: number;
-    let shotTimer: number;
+    let hideTimer: ReturnType<typeof setTimeout>;
+    let shotTimer: ReturnType<typeof setTimeout>;
     if (controlStatus) {
       setShouldRender(true);
       shotTimer = setTimeout(() => {

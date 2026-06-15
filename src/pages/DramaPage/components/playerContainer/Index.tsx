@@ -14,17 +14,16 @@ import { useShallow } from "zustand/shallow";
 import { useI18n } from "@/i18n";
 import CommonToast from "@/components/common/CommonToast";
 import { useReport } from "@/hooks/use-report";
-import { uploadHeartBeat } from "@/lib/services/drama";
-import { cn, throttleImmediate, getRequestLang } from "@/lib/utils";
+import { uploadHeartBeat } from "@/lib/services/book";
+import { cn, throttleImmediate } from "@/lib/utils";
 import { useDramaStore } from "@/stores/drama-store";
-import { useAppStore } from "@/stores/app-store";
 import {
   ChapterLockStatus,
   VideoPlayBtnTypeEnum,
   VideoRef,
 } from "@/types/drama";
-import useAliPlayer from "@/hooks/useAliPlayer";
-import { useDoubleClick } from "@/hooks/useDoubleClick";
+import useAliPlayer from "@/hooks/use-ali-player";
+import { useDoubleClick } from "@/hooks/use-double-click";
 
 import ControlBar from "./ControlBar";
 import PlayerBtn from "./PlayerBtn";
@@ -65,10 +64,9 @@ const PlayerContainer = forwardRef<VideoRef, VideoProps>(
     },
     ref,
   ) => {
-    const { t } = useI18n();
-    const locale = getRequestLang();
+    const { t, locale } = useI18n();
     /** 埋点上报事件 */
-    const { playEvent, errorLogReport, minisEventReport } = useReport();
+    const { playEvent, errorLogReport } = useReport();
     /** 音量区域 */
     const volumeRef = useRef<HTMLDivElement>(null);
     /** 操作进度条状态 */
@@ -82,7 +80,7 @@ const PlayerContainer = forwardRef<VideoRef, VideoProps>(
     /** 实时设置进度条播放时长 */
     const [currentTime, setCurrentTime] = useState(0);
     /** 控制栏隐藏倒计时句柄 */
-    const hideControlsTimerRef = useRef<number | null>(null);
+    const hideControlsTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     /** 保存timeupdate函数 */
     const handleTimeUpdateInternalRef = useRef<(() => void) | null>(null);
     /** 记录视频元数据是否可播放 */
@@ -98,9 +96,7 @@ const PlayerContainer = forwardRef<VideoRef, VideoProps>(
     const autoPlayErrorCountRef = useRef<number>(0);
     /** 第一次进入播放器加载状态，避免闪屏 */
     const initOpacityRef = useRef<boolean>(false);
-    const userInfo = useAppStore.use.userInfo();
-    const accountInfo = userInfo?.account;
-    const uid = userInfo?.uid;
+
     const {
       bookDetail,
       isTouchClick,
@@ -115,6 +111,7 @@ const PlayerContainer = forwardRef<VideoRef, VideoProps>(
       setOpacity,
       currentChapter,
       updateControlStatus,
+      userInfo,
     } = useDramaStore(
       useShallow((state) => ({
         bookDetail: state.bookDetail,
@@ -130,9 +127,11 @@ const PlayerContainer = forwardRef<VideoRef, VideoProps>(
         setOpacity: state.setOpacity,
         currentChapter: state.currentChapter,
         updateControlStatus: state.updateControlStatus,
+        userInfo: state.userInfo
       })),
     );
-
+    const accountInfo = userInfo?.account;
+    const uid = userInfo?.uid;
     /** 保存currentChapter数据，解决闭包问题 */
     const currentChapterRef = useRef(currentChapter);
     useEffect(() => {
@@ -193,7 +192,7 @@ const PlayerContainer = forwardRef<VideoRef, VideoProps>(
      */
     useEffect(() => {
       // handleUploadHeartBeat();
-      const heartbeatInterval: number = setInterval(() => {
+      const heartbeatInterval: ReturnType<typeof setTimeout> = setInterval(() => {
         handleUploadHeartBeat();
       }, heartDelay);
       const eventListenerUploadHeartBeat = () => {
@@ -427,7 +426,6 @@ const PlayerContainer = forwardRef<VideoRef, VideoProps>(
             ctime: Math.floor(Date.now() / 1000),
             page_trace_id: window.charge?.page_trace_id,
           });
-          minisEventReport({ eventName: "ep_play" });
           break;
       }
     }, [showPlayType, currentChapter?.url, currentChapter?.is_lock]);
@@ -568,7 +566,6 @@ const PlayerContainer = forwardRef<VideoRef, VideoProps>(
               currentTime - (window.routerTime || performance.timeOrigin || 0),
           }),
       });
-      minisEventReport({ eventName: "ep_play" });
       isMetaCanPlayRef.current = false;
       // pixelViewContent({
       //   story_id: currentChapterRef.current?.chapter_id || '',
@@ -693,10 +690,6 @@ const PlayerContainer = forwardRef<VideoRef, VideoProps>(
         action_ts: Date.now(),
         ctime: Math.floor(Date.now() / 1000),
       });
-      //用户看完所有免费章节上报
-      if (currentChapter?.serial_number === bookDetail?.free_last) {
-        minisEventReport({ eventName: "add_to_wishlist" });
-      }
     };
     /**
      * 视频资源加载错误的事件
@@ -720,7 +713,7 @@ const PlayerContainer = forwardRef<VideoRef, VideoProps>(
      */
     const { initHandle, changeVideoHandle, destroyAliPlayer, videoRef } =
       useAliPlayer({
-        onPlayerCreateFinish: (e) => {},
+        onPlayerCreateFinish: () => {},
         onLoadedMetadata: handleLoadedMetadata,
         onCanPlay: handleCanPlay,
         onWaiting: handleWaiting,
@@ -833,8 +826,6 @@ const PlayerContainer = forwardRef<VideoRef, VideoProps>(
           ctime: Math.floor(playTimeRef.current / 1000),
           page_trace_id: window.charge?.page_trace_id,
         });
-
-        minisEventReport({ eventName: "video_play_request" });
       }
     }, [
       isContinue,
@@ -884,7 +875,7 @@ const PlayerContainer = forwardRef<VideoRef, VideoProps>(
     const bgStyles = useMemo(
       () => ({
         positionStyle: {
-          transform: opacity ? "none" : "translateY(99999px)",
+          transform: opacity ? "none" : "translateY(9999px)",
           visibility: opacity ? "visible" : "hidden",
         } as CSSProperties,
       }),

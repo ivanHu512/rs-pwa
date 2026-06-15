@@ -17,7 +17,6 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n";
 // import { useCheckoutStore } from '@/stores/checkout-store'
 import { useDramaStore } from "@/stores/drama-store";
-import { useAppStore } from "@/stores/app-store";
 import {
   ChapterLockStatus,
   PageRef,
@@ -41,6 +40,7 @@ const Page = forwardRef<PageRef, PageProps>(({ id, payDrawerRef }, ref) => {
   const isCurrentChapterRef = useRef(false);
   // 合并store选择器，减少订阅次数
   const {
+    userInfo,
     setEnableSwipe,
     setShowControls,
     setShowPlayType,
@@ -50,6 +50,7 @@ const Page = forwardRef<PageRef, PageProps>(({ id, payDrawerRef }, ref) => {
     updateControlStatus,
   } = useDramaStore(
     useShallow((state) => ({
+      userInfo: state.userInfo,
       setEnableSwipe: state.setEnableSwipe,
       setShowControls: state.setShowControls,
       setShowPlayType: state.setShowPlayType,
@@ -59,7 +60,6 @@ const Page = forwardRef<PageRef, PageProps>(({ id, payDrawerRef }, ref) => {
       updateControlStatus: state.updateControlStatus,
     })),
   );
-  const userInfo = useAppStore.use.userInfo();
   const { coins = 0, bonus = 0 } = userInfo?.account || {};
   const amount = coins + bonus;
   // 判断是否为当前章节

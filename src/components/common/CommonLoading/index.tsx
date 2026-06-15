@@ -1,4 +1,4 @@
-import iconLoading from "@/assets/icon_loading.png";
+import { images } from "@/assets/images";
 import { cn } from "@/lib/utils";
 import ReactDOM from "react-dom/client";
 
@@ -21,7 +21,7 @@ const LoadingContent = () => {
           "p-[32px] rounded-[8px] bg-[#1f1f1fe5] flex items-center",
         )}
       >
-        <img src={iconLoading} alt="Loading" className="w-[40px] h-[40px]" />
+        <img src={images.iconLoading} alt="Loading" className="w-[40px] h-[40px]" />
       </div>
     </div>
   );

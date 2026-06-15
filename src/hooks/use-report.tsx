@@ -15,6 +15,9 @@ import {
   getSessionStorage,
   setSessionStorage,
 } from '@/lib/storageUtils'
+
+export type ErrorLogType = "login" | "play" | "other";
+
 export function useReport() {
   const params = useParams()
   const { id } = params
@@ -589,7 +592,50 @@ export function useReport() {
     reportSDK.eventReport(params)
   }
 
+  /**
+   * 错误日志上报
+   */
+  const errorLogReport = (properties: { 
+    err_type: ErrorLogType; [key: string]: any 
+  }) => {
+    if (!userInfo?.uid) return;
+    reportSDK.eventReport({
+      event_name: "m_error_log",
+      sub_event_name: "",
+      properties: {
+        _story_id: id,
+        _chap_id: chapterId,
+        _chap_order_id: Number(sort),
+        _url: location.href,
+        ...properties,
+      }
+    });
+  };
+
+  /** 章节列表点击 */
+  const chapListClickReport = useCallback(
+    (properties: {
+      _action:
+        | "list_click" //章节目录点击
+        | "chap_click"; //目录中具体章节点击
+      [key: string]: any;
+    }) => {
+      reportSDK.eventReport({
+        event_name: "m_custom_event",
+        sub_event_name: "chap_list_click",
+        properties: {
+          _story_id: id,
+          _chap_id: chapterId,
+          _chap_order_id: Number(sort),
+          ...properties,
+        }
+      });
+    },
+    [id, chapterId, sort],
+  );
+
   return {
+    chapListClickReport,
     pwaGuideReport,
     reportHeart,
     payReport,
@@ -612,5 +658,6 @@ export function useReport() {
     performanceScriptReport,
     reportPayChannelChooseStat,
     pageClickReport,
+    errorLogReport,
   }
 }

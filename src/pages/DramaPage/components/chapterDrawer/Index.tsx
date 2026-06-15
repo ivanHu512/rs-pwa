@@ -10,8 +10,8 @@ import { useI18n } from "@/i18n";
 import CollapsibleText from "./CollapsibleText";
 import Drawer from "@/components/common/CommonDrawer";
 import Card from "./Card";
-import { useItemRefs } from "@/hooks/useItemRefs";
-import { useNavChapter } from "@/hooks/useNavChapter";
+import { useItemRefs } from "@/hooks/use-item-refs";
+import { useNavChapter } from "@/hooks/use-nav-chapter";
 import { useReport } from "@/hooks/use-report";
 // import { sessionKeyCurrentChapter, sessionKeyNextChapter } from '@/lib/constant'
 import { cn } from "@/lib/utils";
@@ -225,7 +225,7 @@ const ChapterDrawer: React.FC<ChapterDrawerProps> = ({ swiperRef }) => {
    */
   useEffect(() => {
     let scrollContainer: Element | null = null;
-    let timeoutId: number;
+    let timeoutId: ReturnType<typeof setTimeout>;
     const handleScroll = () => {
       if (titleRef.current) {
         const titleRect = titleRef.current.getBoundingClientRect();
