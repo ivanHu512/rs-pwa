@@ -14,6 +14,10 @@ const localeModules = import.meta.glob("../locales/*.json", {
   eager: true,
 }) as Record<string, { default: MessageTree }>;
 
+const isTruthy = <T>(value: T | null): value is T => {
+  return value !== null;
+}
+
 const resources = Object.fromEntries(
   Object.entries(localeModules)
     .map(([path, module]) => {
@@ -23,9 +27,7 @@ const resources = Object.fromEntries(
       }
       return [locale as AppLocale, { translation: module.default }] as const;
     })
-    .filter((entry): entry is readonly [string, { translation: MessageTree }] =>
-      Boolean(entry),
-    ),
+    .filter(isTruthy),
 ) as Record<AppLocale, { translation: MessageTree }>;
 
 if (!i18n.isInitialized) {
